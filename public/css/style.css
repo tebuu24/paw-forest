@@ -1,0 +1,675 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap');
+
+/* bāzes lietas visai lapai */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #fdf6f0;
+    color: #4a3f3a;
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.container{
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+h1, h2, h3{
+    margin-bottom: 15px;
+    color: #4a3f3a;
+}
+p{
+    margin-bottom: 10px;
+}
+
+/* pogas un formas */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 1.05rem;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+}
+.btn-blue{
+    background-color: #b8dde8;
+    color: #4a3f3a;
+}
+.btn-green{
+    background-color: #b9d4bb;
+    color: #4a3f3a;
+}
+.btn-orange{
+    background-color: #f5e6b2;
+    color: #4a3f3a;
+}
+.btn-outline{
+    border: 3px solid #4a3f3a;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    color: #4a3f3a;
+}
+.btn-red{
+    background-color: #e07a8a;
+    color: #fff9f5;
+}
+.form-group{
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+.form-group label{
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #4a3f3a;
+}
+input, select, textarea{
+    padding: 10px;
+    border: 1px solid #e8ddd7;
+    background-color: #fff9f5;
+    color: #4a3f3a;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 1rem;
+    width: 100%;
+}
+input::placeholder, textarea::placeholder{
+    color: #8a7a74;
+}
+
+/* header navigācija publiskajai lapai */
+header{
+    background-color: #fff9f5;
+    padding: 20px 0;
+    border-bottom: 1px solid #e8ddd7;
+}
+.nav-inner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.pub-nav{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-left: auto;
+}
+.pub-nav a{
+    text-decoration: none;
+    color: #8a7a74;
+    font-weight: 500;
+}
+.pub-nav a b{
+    color: #4a3f3a;
+}
+
+/* parastās cards un meklēšana */
+.block-card{
+    background-color: #fff9f5;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #e8ddd7;
+    margin-bottom: 20px;
+}
+.search-bar-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 10px 0;
+    margin-bottom: 40px;
+}
+.search-inputs{
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+}
+.search-input-field{
+    width: 400px;
+    margin-bottom: 0;
+}
+.filter-select{
+    padding: 20px;
+    margin-bottom: 0;
+}
+.search-inputs .block-card{
+    margin-bottom: 0;
+    width: 380px;
+    height: 46px;
+    padding: 10px 15px;
+}
+.search-bar-container select.block-card{
+    margin-bottom: 0;
+    height: 46px;
+    padding: 0 15px;
+    width: auto;
+    min-width: 220px;
+}
+
+/* sākumlapas lielā daļa */
+.hero-section{
+    padding: 40px;
+    margin-bottom: 30px;
+    background-color: #fff9f5;
+}
+.hero-tagline{
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #8a7a74;
+}
+.hero-title{
+    font-size: 3rem;
+    margin: 10px 0;
+    color: #4a3f3a;
+}
+.hero-text{
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    max-width: 600px;
+    color: #8a7a74;
+}
+.hero-buttons{
+    display: flex;
+    gap: 15px;
+}
+
+/* dzīvnieku galerijas grid */
+.gallery-grid{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 30px;
+    margin-bottom: 5px;
+}
+.animal-card{
+    flex: 0 1 calc(25% - 15px);
+    min-width: 240px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.img-placeholder{
+    width: 100%;
+    height: 200px;
+    background-color: #e8ddd7;
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+}
+.img-placeholder::before, .img-placeholder::after{
+    content: '';
+    position: absolute;
+    width: 140%;
+    height: 1px;
+    background-color: #8a7a74;
+    top: 50%;
+    left: -20%;
+}
+.img-placeholder::before{
+    transform: rotate(35deg);
+}
+.img-placeholder::after{
+    transform: rotate(-35deg);
+}
+.card-info{
+    padding-top: 15px;
+}
+
+/* viss par admin paneli */
+.admin-layout{
+    display: flex;
+    min-height: 100vh;
+}
+.admin-sidebar{
+    width: 250px;
+    background-color: #4a3f3a;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.admin-sidebar-title,
+.admin-sidebar h2{
+    color: #fff9f5 !important;
+    margin-bottom: 30px;
+}
+.admin-main{
+    flex: 1;
+    padding: 40px;
+    background-color: #fdf6f0;
+}
+.admin-menu{
+    list-style: none;
+    margin-top: 30px;
+}
+.admin-menu li{
+    margin-bottom: 8px;
+    border-radius: 6px;
+}
+.admin-menu li.active{
+    background-color: #f2c4ce;
+}
+.admin-menu a{
+    color: #e8ddd7;
+    text-decoration: none;
+    display: block;
+    padding: 12px;
+    font-weight: 500;
+}
+.admin-menu li.active a{
+    color: #4a3f3a;
+    font-weight: 700;
+}
+.admin-menu li:not(.active):hover{
+    background-color: rgba(255, 249, 245, 0.1);
+}
+.logout-btn{
+    width: 100%;
+}
+.stats-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 40px;
+    width: 100%;
+}
+.admin-stat-card{
+    background: #fff9f5;
+    padding: 25px;
+    flex: 1;
+    border: 1px solid #e8ddd7;
+    border-radius: 8px;
+    text-align: center;
+}
+.admin-stat-card .num{
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-top: 5px;
+}
+.stat-icon-label{
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #383230;
+}
+.stat-red-num{
+    color: #e07a8a;
+}
+.stat-green-num{
+    color: #7cbc80;
+}
+.stat-purple-num{
+    color: #8a67b9;
+}
+
+/* tabulas adminā */
+table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td{
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e8ddd7;
+}
+th{
+    color: #4a3f3a;
+    font-weight: 700;
+}
+
+.info-split-section{
+    display: flex;
+    gap: 30px;
+    padding: 40px;
+    margin-top: 40px;
+    background-color: #fff9f5;
+    flex-wrap: wrap;
+}
+.info-visual-box{
+    flex: 1;
+    min-width: 250px;
+    background: #f5e6b2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    height: 250px;
+    margin-bottom: 0;
+    border-radius: 8px;
+}
+.info-content-box{
+    flex: 2;
+    min-width: 300px;
+}
+.info-pretitle{
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #8a7a74;
+}
+.info-title{
+    margin: 10px 0 20px 0;
+    color: #4a3f3a;
+}
+.info-paragraph{
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+/* ziedojumu lapa */
+.donation-container{
+    max-width: 700px;
+    padding-top: 40px;
+}
+.donation-title{
+    text-align: center;
+    margin-bottom: 10px;
+}
+.donation-subtitle{
+    text-align: center;
+    color: #8a7a74;
+    margin-bottom: 30px;
+}
+.donation-goal-box{
+    background-color: #fdf6f0;
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 25px;
+    border: 1px solid #e8ddd7;
+}
+.goal-title{
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+.goal-amount{
+    font-weight: bold;
+    color: #e07a8a;
+    margin-bottom: 5px;
+}
+.progress-bar-bg{
+    background: #e8ddd7;
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.progress-bar-fill{
+    background: #b8dde8;
+    width: 50%;
+    height: 100%;
+}
+.donation-presets{
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+.preset-btn{
+    flex: 1;
+}
+.amount-input{
+    margin-bottom: 0;
+}
+.form-row-split{
+    display: flex;
+    gap: 10px;
+}
+.split-field{
+    flex: 1;
+}
+.form-spacer{
+    margin-bottom: 20px;
+}
+.submit-donation-btn{
+    width: 100%;
+    font-size: 1.1rem;
+}
+
+/* paziņojumi un footer */
+.alert-box{
+    background-color: #f2c4ce;
+    color: #4a3f3a;
+    padding: 15px;
+    border-radius: 6px;
+    margin: 15px 0;
+    font-size: 0.9rem;
+    border: 1px solid #e8ddd7;
+}
+footer{
+    text-align: center;
+    padding: 40px 0;
+    margin-top: auto;
+    border-top: 1px solid #e8ddd7;
+    font-size: 0.9rem;
+    color: #8a7a74;
+}
+.footer-top-margin{
+    margin-top: 60px;
+}
+
+/* pieteikumu un apmeklējumu formas */
+.form-page-container{
+    max-width: 600px;
+    margin-top: 50px;
+}
+.form-card{
+    padding: 40px;
+    background-color: #fff9f5;
+}
+.compact-input{
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    margin-bottom: 0px;
+}
+.full-width-btn{
+    width: 100%;
+}
+
+/* login un register lapām */
+.auth-container{
+    max-width: 500px;
+    padding-top: 40px;
+}
+.auth-container-login{
+    max-width: 500px;
+    padding-top: 60px;
+}
+.auth-card{
+    padding: 40px;
+    background: #ffffff !important;
+}
+.auth-switch-text{
+    text-align: center;
+}
+.auth-switch-text a{
+    color: #2b2d2f;
+    font-weight: 700;
+}
+
+
+.login-btn{
+    width: 100%;
+    padding: 16px 30px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+.register-btn{
+    width: 100%;
+    padding: 16px 30px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+
+/* profila lapa */
+.profile-layout{
+    display: flex;
+    gap: 30px;
+    margin-top: 40px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.profile-info-card{
+    flex: 1;
+    min-width: 320px;
+}
+.profile-history-card{
+    flex: 2;
+    min-width: 450px;
+}
+.profile-update-btn{
+    width: 100%;
+}
+
+/* dzīvnieka profila skats */
+.profile-view-layout{
+    display: flex;
+    gap: 40px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+.profile-view-img{
+    flex: 1;
+    min-width: 300px;
+}
+.animal-big-placeholder{
+    height: 400px;
+}
+.profile-view-data{
+    flex: 12;
+    min-width: 300px;
+}
+.profile-section-title{
+    margin-top: 20px;
+}
+.profile-action-buttons{
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+}
+
+/* valodas izvēle */
+.lang-select{
+    width: auto;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    height: auto;
+    background-color: #fff9f5;
+    border: 1px solid #e8ddd7;
+}
+.admin-lang-container{
+    margin-top: auto;
+    margin-bottom: 15px;
+    padding: 0 10px;
+}
+.admin-lang-select{
+    width: 100%;
+    background-color: #4a3f3a;
+    color: #fff9f5;
+    border: 1px solid #8a7a74;
+}
+
+.form-actions{
+    margin-bottom: 20px;
+}
+
+.security-divider{
+    border: 0;
+    height: 1px;
+    background: #e8ddd7;
+    margin: 20px 0 25px 0;
+}
+
+.security-form h3{
+    font-size: 1.15rem;
+    margin-bottom: 15px;
+    margin-top: 5px;
+}
+
+/* admin tabulām pievienot rinda */
+.inline-add-row{
+    background-color: #fffaf7;
+    border-bottom: 2px solid #e8ddd7;
+}
+.inline-add-row td{
+    padding: 6px 8px;
+}
+.inline-add-row input[type="text"],.inline-add-row input[type="date"],.inline-add-row select{
+    width: 100%;
+    padding: 6px;
+    font-size: 0.9rem;
+    border: 1px solid #dccbc1;
+    border-radius: 4px;
+    box-sizing: border-box;
+    height: auto;
+}
+.auto-id{
+    font-size: 0.85rem;
+    color: #a08c83;
+    font-style: italic;
+}
+.table-inline-btn{
+    padding: 5px 12px;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+/* Animal Facts API*/
+.animal-fact-section{
+    padding: 40px;
+    background-color: #fff9f5;
+    border-left: 5px solid #e67e22;
+    margin: 40px 0;
+    text-align: center;
+}
+
+.fact-pretitle{
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #e67e22;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.fact-title{
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+.fact-text{
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: #4a3f3a;
+    max-width: 700px;
+    margin: 0 auto 25px auto;
+    font-style: italic;
+}
+.btn-orange{
+    background-color: #ed9344;
+    color: #ffffff;
+}
+.btn-orange:hover{
+    background-color: #c45e1b;
+}
