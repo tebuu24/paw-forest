@@ -24,7 +24,6 @@ use function Livewire\Volt\{state};
             </nav>
         </div>
     </header>
-
     <main class="container auth-container">
         <div class="block-card auth-card">
             <h1>{{ __('Registration') }}</h1>

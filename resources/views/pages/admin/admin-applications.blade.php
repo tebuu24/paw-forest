@@ -18,9 +18,15 @@ use function Livewire\Volt\{state};
                     <li><a href="/dashboard">{{ __('Dashboard') }}</a></li>
                     <li><a href="/admin/animals">{{ __('Animals') }}</a></li>
                     <li class="active"><a href="/admin/applications">{{ __('Applications') }}</a></li>
-                    <li><a href="/admin/donations">{{ __('Donations') }}</a></li>
+                    @if(auth()->user()->role === 'admin')
+                        <li><a href="/admin/donations">{{ __('Donations') }}</a></li>
+                    @endif
+                    
                     <li><a href="/admin/medicine">{{ __('Medications') }}</a></li>
-                    <li><a href="/admin/users">{{ __('Users') }}</a></li>
+                    
+                    @if(auth()->user()->role === 'admin')
+                        <li><a href="/admin/users">{{ __('Users') }}</a></li>
+                    @endif
                 </ul>
             </div>
             
@@ -31,7 +37,14 @@ use function Livewire\Volt\{state};
                 </select>
             </div>
             <div>
-                <a href="/login" class="btn btn-red logout-btn">{{ __('Log out') }}</a>
+                <a href="#" class="btn btn-red logout-btn" 
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    {{ __('Log out') }}
+                </a>
+
+                <form id="logout-form" action="/logout" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </div>
         </aside>
 

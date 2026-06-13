@@ -60,6 +60,11 @@ class User extends Authenticatable implements PasskeyUser
     {
         return $this->role === 'user';
     }
+    
+    public function isEmployee(): bool
+    {
+        return in_array($this->role, ['employee', 'admin']);
+    }
 
     public function initials(): string
     {

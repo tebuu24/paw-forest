@@ -2,38 +2,22 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('user')->insert([
-            [
-                'id' => 1,
-                'name' => 'Admin User',
-                'username' => 'admin',
-                'email' => 'admin@test.lv',
-                'password' => Hash::make('password'),
-                'role' => 'admin',
-                'address' => 'Rīga',
-                'is_blocked' => false,
-                'date_joined' => now(),
-            ],
-
-            [
-                'id' => 2,
-                'name' => 'Jānis Bērziņš',
-                'username' => 'janis1',
-                'email' => 'janis@mail.lv',
-                'password' => Hash::make('password'),
-                'role' => 'user',
-                'address' => 'Rīga',
-                'is_blocked' => false,
-                'date_joined' => now(),
-            ],
+        User::create([
+            'name' => 'System Admin',
+            'username' => 'admin',
+            'email' => 'admin@pawforest.com',
+            'password' => Hash::make('password'),
+            'role' => 'admin',
+            'address' => 'Riga, Latvia',
+            'date_joined' => now(),
         ]);
     }
 }

@@ -17,8 +17,20 @@
                 <a href="/"><b>{{ __('Home') }}</b></a> <span>|</span>
                 <a href="/gallery">{{ __('Gallery') }}</a> <span>|</span>
                 <a href="/donations">{{ __('Donate') }}</a> <span>|</span>
-                <a href="/profile">{{ __('Profile') }}</a> <span>|</span>
-                <a href="/login">{{ __('Log in') }}</a> <span>|</span>
+                @auth
+                    <a href="/profile">Profile</a>
+
+                    @if(auth()->user()->isEmployee())
+                        <a href="/dashboard">Admin Panel</a>
+                    @endif
+
+                    <form method="POST" action="/logout">
+                        @csrf
+                        <button>Logout</button>
+                    </form>
+                @else
+                    <a href="/login">Log in</a>
+                @endauth
                 
                 <select class="lang-select" onchange="location = this.value;">
                     <option value="/lang/en" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>🌐 EN</option>

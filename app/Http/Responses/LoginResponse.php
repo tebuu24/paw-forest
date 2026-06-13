@@ -8,12 +8,7 @@ class LoginResponse implements LoginResponseContract
 {
     public function toResponse($request)
     {
-        $user = auth()->user();
-
-        if ($user->role === 'admin' || $user->role === 'employee') {
-            return redirect('/admin');
-        }
-
-        return redirect('/dashboard');
+        // Pilnīgi visus (gan adminus, gan parastos) metam uz sākumlapu
+        return redirect('/');
     }
 }

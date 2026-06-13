@@ -25,7 +25,6 @@ use function Livewire\Volt\{state};
             </nav>
         </div>
     </header>
-
     <main class="container auth-container">
         <div class="block-card auth-card">
             <h1>{{ __('Log in') }}</h1>
@@ -33,7 +32,7 @@ use function Livewire\Volt\{state};
             <form method="POST" action="/login">
                 @csrf
                 <div class="form-group">
-                    <label>Username or Email</label>
+                    <label>Email</label>
                     <input name="email" type="text" required>
                 </div>
                 <div class="form-group">
