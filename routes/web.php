@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 
-Route::view('/', 'welcome')->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
@@ -38,3 +38,13 @@ Route::get('/lang/{locale}', function ($locale) {
     }
     return redirect()->back();
 });
+
+Volt::route('/', 'index');
+
+Route::get('/', function () {
+    return view('pages.index');
+});
+
+Route::get('/dashboard', function () {
+    return view('pages.dashboard');
+})->name('dashboard');

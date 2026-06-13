@@ -1,6 +1,3 @@
-<?php
-use function Livewire\Volt\{state};
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +5,7 @@ use function Livewire\Volt\{state};
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paw Forest</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    @livewireStyles
 </head>
 <body>
     <header>
@@ -100,16 +98,9 @@ use function Livewire\Volt\{state};
             </div>
         </section>
 
-        <section class="block-card animal-fact-section">
-            <div class="fact-content">
-                <span class="fact-pretitle">💡 {{ __('Did You Know?') }}</span>
-                <h2 class="fact-title">{{ __('Fun Animal Fact') }}</h2>
-                <p id="animal-fact-placeholder" class="fact-text">
-                    {{ __('Loading an interesting animal fact just for you...') }}
-                </p>
-                <button id="next-fact-btn" class="btn btn-orange">{{ __('Get Another Fact') }}</button>
-            </div>
-        </section>
+        <div>
+            <livewire:animal-fact />
+        </div>
 
         <section class="block-card info-split-section">
             <div class="block-card info-visual-box">
@@ -132,5 +123,6 @@ use function Livewire\Volt\{state};
     <footer>
         <p>&copy; 2026 Paw Forest</p>
     </footer>
+    @livewireScripts
 </body>
 </html>
