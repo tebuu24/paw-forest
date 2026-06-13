@@ -27,7 +27,7 @@ use function Livewire\Volt\{state};
 
     <main class="container auth-container">
         <div class="block-card auth-card">
-            <h2>Registration</h2>
+            <h1>Registration</h1>
             <br>
             <form action="gallery.html">
                 <div class="form-group">

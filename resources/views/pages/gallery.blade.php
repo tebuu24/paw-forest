@@ -32,6 +32,8 @@ use function Livewire\Volt\{state};
     </header>
 
     <main class="container">
+        <br>
+        <h1>Our Shelter Gallery</h1>
         <div class="search-bar-container">
             <div class="search-inputs">
                 <input type="text" placeholder="Search by species, age, location" class="block-card">
@@ -49,7 +51,7 @@ use function Livewire\Volt\{state};
             <div class="animal-card block-card">
                 <div class="img-placeholder"></div>
                 <div class="card-info">
-                    <h3>Buddy</h3>
+                    <h2>Buddy</h2>
                     <p>Dog, 3 years, Riga</p>
                     <a href="/animal-profile" class="btn btn-green">View Profile</a>
                 </div>
@@ -57,7 +59,7 @@ use function Livewire\Volt\{state};
             <div class="animal-card block-card">
                 <div class="img-placeholder"></div>
                 <div class="card-info">
-                    <h3>Whiskers</h3>
+                    <h2>Whiskers</h2>
                     <p>Cat, 1 year, Rezekne</p>
                     <a href="/animal-profile" class="btn btn-green">View Profile</a>
                 </div>
@@ -65,7 +67,7 @@ use function Livewire\Volt\{state};
             <div class="animal-card block-card">
                 <div class="img-placeholder"></div>
                 <div class="card-info">
-                    <h3>Rocky</h3>
+                    <h2>Rocky</h2>
                     <p>Rabbit, 6 months, Ventspils</p>
                     <a href="/animal-profile" class="btn btn-green">View Profile</a>
                 </div>
@@ -73,7 +75,7 @@ use function Livewire\Volt\{state};
             <div class="animal-card block-card">
                 <div class="img-placeholder"></div>
                 <div class="card-info">
-                    <h3>Goldie</h3>
+                    <h2>Goldie</h2>
                     <p>Fish, 2 months, Riga</p>
                     <a href="/animal-profile" class="btn btn-green">View Profile</a>
                 </div>

@@ -39,7 +39,7 @@ use function Livewire\Volt\{state};
             </p>
 
             <div class="donation-goal-box">
-                <h3 class="goal-title">This Month's Goal: Medical Fund</h3>
+                <h2 class="goal-title">This Month's Goal: Medical Fund</h2>
                 <p class="goal-amount">$2,500 of $5,000</p>
                 <div class="progress-bar-bg">
                     <div class="progress-bar-fill"></div>

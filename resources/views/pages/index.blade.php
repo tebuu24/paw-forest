@@ -4,10 +4,10 @@ use function Livewire\Volt\{state};
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paw Forest</title>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
     <header>
@@ -44,7 +44,7 @@ use function Livewire\Volt\{state};
             </div>
         </section>
 
-        <section class="stats-row">
+        <div class="stats-row">
             <div class="admin-stat-card block-card">
                 <div class="stat-icon-label">Animals Adopted</div>
                 <div class="num stat-green-num">124</div>
@@ -59,26 +59,13 @@ use function Livewire\Volt\{state};
                 <div class="stat-icon-label">Latest Donations</div>
                 <div class="num stat-purple-num">$2,500</div>
             </div>
-        </section>
-
-        <div id="gallery" class="search-bar-container">
-            <div class="search-inputs">
-                <input type="text" placeholder="Search by breed, age, shelter location" class="block-card search-input-field">
-                <button class="btn btn-blue">Search</button>
-            </div>
-            <div>
-                <select class="block-card filter-select">
-                    <option>Sort by: Recently Added</option>
-                    <option>Sort by: Age</option>
-                </select>
-            </div>
         </div>
-
+        <h2 id="gallery">Recently added</h2>
         <section class="gallery-grid">
             <div class="animal-card block-card">
                 <div class="img-placeholder"></div>
                 <div class="card-info">
-                    <h3>Buddy</h3>
+                    <h2>Buddy</h2>
                     <p>Dog, 3 years, Riga</p>
                     <a href="/animal-profile" class="btn btn-green">View Profile</a>
                 </div>
@@ -87,7 +74,7 @@ use function Livewire\Volt\{state};
             <div class="animal-card block-card">
                 <div class="img-placeholder"></div>
                 <div class="card-info">
-                    <h3>Whiskers</h3>
+                    <h2>Whiskers</h2>
                     <p>Cat, 1 year, Rezekne</p>
                     <a href="/animal-profile" class="btn btn-green">View Profile</a>
                 </div>
@@ -96,7 +83,7 @@ use function Livewire\Volt\{state};
             <div class="animal-card block-card">
                 <div class="img-placeholder"></div>
                 <div class="card-info">
-                    <h3>Rocky</h3>
+                    <h2>Rocky</h2>
                     <p>Rabbit, 6 months, Ventspils</p>
                     <a href="/animal-profile" class="btn btn-green">View Profile</a>
                 </div>
@@ -105,7 +92,7 @@ use function Livewire\Volt\{state};
             <div class="animal-card block-card">
                 <div class="img-placeholder"></div>
                 <div class="card-info">
-                    <h3>Goldie</h3>
+                    <h2>Goldie</h2>
                     <p>Fish, 2 months, Riga</p>
                     <a href="/animal-profile" class="btn btn-green">View Profile</a>
                 </div>

@@ -37,7 +37,7 @@ use function Livewire\Volt\{state};
         <div class="profile-left-column">
             
             <div class="block-card profile-info-card">
-                <h2>User Profile</h2>
+                <h1>User Profile</h1>
                 <br>
                 <form action="#">
                     <div class="form-group">

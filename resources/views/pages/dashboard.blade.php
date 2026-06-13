@@ -42,15 +42,15 @@ use function Livewire\Volt\{state};
 
             <div class="stats-row">
                 <div class="admin-stat-card block-card">
-                    <h3>Animals Registered</h3>
+                    <h2>Animals Registered</h2>
                     <div class="num stat-green-num">169</div>
                 </div>
                 <div class="admin-stat-card block-card">
-                    <h3>Pending Adoptions</h3>
+                    <h2>Pending Adoptions</h2>
                     <div class="num stat-red-num">14</div>
                 </div>
                 <div class="admin-stat-card block-card">
-                    <h3>Total Donations Received</h3>
+                    <h2>Total Donations Received</h2>
                     <div class="num stat-purple-num">$2,500</div>
                 </div>
             </div>

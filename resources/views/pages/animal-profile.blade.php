@@ -47,7 +47,7 @@ use function Livewire\Volt\{state};
                 <p><b>Shelter Location ID:</b> #L01</p>
                 <p><b>Date Added to Shelter:</b> 2025-04-10</p>
                 
-                <h3 class="profile-section-title">Description / Medication Notes:</h3>
+                <h2 class="profile-section-title">Description / Medication Notes:</h2>
                 <p>Buddy is a friendly, active retriever. Currently receives regular flea prevention and checks.</p>
                 
                 <div class="profile-action-buttons">
