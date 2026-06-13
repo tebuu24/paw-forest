@@ -7,7 +7,7 @@ use function Livewire\Volt\{state};
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paw Forest - Profile</title>
+    <title>{{ __('Paw Forest - Profile') }}</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
@@ -18,15 +18,15 @@ use function Livewire\Volt\{state};
                 <h2>🏠 Paw Forest</h2>
             </div>
             <nav class="pub-nav">
-                <a href="/">Home</a> <span>|</span>
-                <a href="/gallery">Gallery</a> <span>|</span>
-                <a href="/donations">Donate</a> <span>|</span>
-                <a href="/profile"><b>Profile</b></a> <span>|</span>
-                <a href="/login">Sign out</a> <span>|</span>
+                <a href="/">{{ __('Home') }}</a> <span>|</span>
+                <a href="/gallery">{{ __('Gallery') }}</a> <span>|</span>
+                <a href="/donations">{{ __('Donate') }}</a> <span>|</span>
+                <a href="/profile"><b>{{ __('Profile') }}</b></a> <span>|</span>
+                <a href="/login">{{ __('Sign out') }}</a> <span>|</span>
                 
-                <select class="lang-select">
-                    <option value="en" selected>🌐 EN</option>
-                    <option value="lv">🌐 LV</option>
+                <select class="lang-select" onchange="location = this.value;">
+                    <option value="/lang/en" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>🌐 EN</option>
+                    <option value="/lang/lv" {{ app()->getLocale() == 'lv' ? 'selected' : '' }}>🌐 LV</option>
                 </select>
             </nav>
         </div>
@@ -37,75 +37,75 @@ use function Livewire\Volt\{state};
         <div class="profile-left-column">
             
             <div class="block-card profile-info-card">
-                <h1>User Profile</h1>
+                <h1>{{ __('User Profile') }}</h1>
                 <br>
                 <form action="#">
                     <div class="form-group">
-                        <label>Name</label>
+                        <label>{{ __('Name') }}</label>
                         <input type="text" value="Alice Smith">
                     </div>
                     <div class="form-group">
-                        <label>Username</label>
+                        <label>{{ __('Username') }}</label>
                         <input type="text" value="alice_smith">
                     </div>
                     <div class="form-group">
-                        <label>Email</label>
+                        <label>{{ __('Email') }}</label>
                         <input type="email" value="alice.smith@example.com">
                     </div>
                     <div class="form-group">
-                        <label>Address</label>
+                        <label>{{ __('Address') }}</label>
                         <input type="text" value="Meowtown street 5a, Meowville">
                     </div>
                     <br>
-                    <button type="submit" class="btn btn-blue profile-update-btn">Update Information</button>
+                    <button type="submit" class="btn btn-blue profile-update-btn">{{ __('Update Information') }}</button>
                 </form>
             </div>
 
             <div class="block-card profile-security-card">
-                <h2>Security Settings</h2>
+                <h2>{{ __('Security Settings') }}</h2>
                 <br>
                 <form action="#" class="security-form">
-                    <h3>Change Password</h3>
+                    <h3>{{ __('Change Password') }}</h3>
                     <div class="form-group">
-                        <label>Current Password</label>
+                        <label>{{ __('Current Password') }}</label>
                         <input type="password" required>
                     </div>
                     <div class="form-group">
-                        <label>New Password</label>
+                        <label>{{ __('New Password') }}</label>
                         <input type="password" required>
                     </div>
                     <div class="form-group">
-                        <label>Confirm New Password</label>
+                        <label>{{ __('Confirm New Password') }}</label>
                         <input type="password" required>
                     </div>
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-blue">Change Password</button>
+                        <button type="submit" class="btn btn-blue">{{ __('Change Password') }}</button>
                     </div>
                 </form>
                 
                 <hr class="security-divider">
 
                 <form action="#" class="security-form">
-                    <h3 class="danger-title">Delete Account</h3>
-                    <p class="danger-text">Warning: This action is permanent and cannot be undone.</p>
+                    <h3 class="danger-title">{{ __('Delete Account') }}</h3>
+                    <p class="danger-text">{{ __('Warning: This action is permanent and cannot be undone.') }}</p>
                     <div class="form-group">
-                        <label>Confirm with Password</label>
-                        <input type="password" placeholder="Enter your password to confirm" required>
+                        <label>{{ __('Confirm with Password') }}</label>
+                        <input type="password" placeholder="{{ __('Enter your password to confirm') }}" required>
                     </div>
-                    <button type="submit" class="btn btn-red">Permanently Delete Account</button>
+                    <button type="submit" class="btn btn-red">{{ __('Permanently Delete Account') }}</button>
                 </form>
             </div>
         </div>
 
         <div class="block-card profile-history-card">
-            <h2>My Adoption Applications</h2>
+            <h2>{{ __('My Adoption Applications') }}</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Animal</th>
-                        <th>Comment</th>
-                        <th>Status</th>
+                        <th>{{ __('Date') }}</th>
+                        <th>{{ __('Animal') }}</th>
+                        <th>{{ __('Comment') }}</th>
+                        <th>{{ __('Status') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -113,20 +113,20 @@ use function Livewire\Volt\{state};
                         <td>12.05.2026</td>
                         <td>Bella(Rabbit)</td>
                         <td>Looking for a friendly pet.</td>
-                        <td><span class="stat-green-num">Approved</span></td>
+                        <td><span class="stat-green-num">{{ __('Approved') }}</span></td>
                     </tr>
                 </tbody>
             </table>
 
             <br><br>
-            <h2>My Scheduled Visits</h2>
+            <h2>{{ __('My Scheduled Visits') }}</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>location</th>
-                        <th>Animal</th>
-                        <th>Comment</th>
+                        <th>{{ __('Date') }}</th>
+                        <th>{{ __('Location') }}</th>
+                        <th>{{ __('Animal') }}</th>
+                        <th>{{ __('Comment') }}</th>
                     </tr>
                 </thead>
                 <tbody>

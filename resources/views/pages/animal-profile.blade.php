@@ -6,7 +6,7 @@ use function Livewire\Volt\{state};
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paw Forest - Animal Profile</title>
+    <title>{{ __('Paw Forest - Animal Profile') }}</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
@@ -16,15 +16,15 @@ use function Livewire\Volt\{state};
                 <h2>🏠 Paw Forest</h2>
             </div>
             <nav class="pub-nav">
-                <a href="/">Home</a> <span>|</span>
-                <a href="/gallery"><b>Gallery</b></a> <span>|</span>
-                <a href="/donations">Donate</a> <span>|</span>
-                <a href="/profile">Profile</a> <span>|</span>
-                <a href="/login">Log in</a> <span>|</span>
+                <a href="/">{{ __('Home') }}</a> <span>|</span>
+                <a href="/gallery"><b>{{ __('Gallery') }}</b></a> <span>|</span>
+                <a href="/donations">{{ __('Donate') }}</a> <span>|</span>
+                <a href="/profile">{{ __('Profile') }}</a> <span>|</span>
+                <a href="/login">{{ __('Log in') }}</a> <span>|</span>
                 
-                <select class="lang-select">
-                    <option value="en" selected>🌐 EN</option>
-                    <option value="lv">🌐 LV</option>
+                <select class="lang-select" onchange="location = this.value;">
+                    <option value="/lang/en" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>🌐 EN</option>
+                    <option value="/lang/lv" {{ app()->getLocale() == 'lv' ? 'selected' : '' }}>🌐 LV</option>
                 </select>
             </nav>
         </div>
@@ -39,20 +39,21 @@ use function Livewire\Volt\{state};
             
             <div class="profile-view-data">
                 <h1>Buddy</h1>
-                <p><b>Species:</b> Dog</p>
-                <p><b>Breed:</b> Golden Retriever</p>
-                <p><b>Age:</b> 3 years</p>
-                <p><b>Gender:</b> Female</p>
-                <p><b>Health Status:</b> Healthy & Vaccinated</p>
-                <p><b>Shelter Location ID:</b> #L01</p>
-                <p><b>Date Added to Shelter:</b> 2025-04-10</p>
                 
-                <h2 class="profile-section-title">Description / Medication Notes:</h2>
+                <p><b>{{ __('Species') }}:</b> Dog</p>
+                <p><b>{{ __('Breed') }}:</b> Golden Retriever</p>
+                <p><b>{{ __('Age') }}:</b> 3 years</p>
+                <p><b>{{ __('Gender') }}:</b> Female</p>
+                <p><b>{{ __('Health Status') }}:</b> Healthy & Vaccinated</p>
+                <p><b>{{ __('Shelter Location ID') }}:</b> #L01</p>
+                <p><b>{{ __('Date Added to Shelter') }}:</b> 2025-04-10</p>
+                
+                <h2 class="profile-section-title">{{ __('Description / Medication Notes') }}:</h2>
                 <p>Buddy is a friendly, active retriever. Currently receives regular flea prevention and checks.</p>
                 
                 <div class="profile-action-buttons">
-                    <a href="/apply-adoption" class="btn btn-blue">Apply for Adoption</a>
-                    <a href="/apply-visitation" class="btn btn-green">Apply for Visitation</a>
+                    <a href="/apply-adoption" class="btn btn-blue">{{ __('Apply for Adoption') }}</a>
+                    <a href="/apply-visitation" class="btn btn-green">{{ __('Apply for Visitation') }}</a>
                 </div>
             </div>
 
@@ -62,6 +63,5 @@ use function Livewire\Volt\{state};
     <footer>
         <p>&copy; 2026 Paw Forest</p>
     </footer>
-
 </body>
 </html>

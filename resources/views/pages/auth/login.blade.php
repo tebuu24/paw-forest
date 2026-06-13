@@ -7,7 +7,7 @@ use function Livewire\Volt\{state};
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paw Forest - Log In</title>
+    <title>{{ __('Paw Forest - Log In') }}</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
@@ -18,9 +18,9 @@ use function Livewire\Volt\{state};
                 <h2>🏠 Paw Forest</h2>
             </div>
             <nav class="pub-nav">
-                <select class="lang-select">
-                    <option value="en" selected>🌐 EN</option>
-                    <option value="lv">🌐 LV</option>
+                <select class="lang-select" onchange="location = this.value;">
+                    <option value="/lang/en" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>🌐 EN</option>
+                    <option value="/lang/lv" {{ app()->getLocale() == 'lv' ? 'selected' : '' }}>🌐 LV</option>
                 </select>
             </nav>
         </div>
@@ -28,22 +28,24 @@ use function Livewire\Volt\{state};
 
     <main class="container auth-container">
         <div class="block-card auth-card">
-            <h1>Log In</h1>
+            <h1>{{ __('Log in') }}</h1>
             <br>
-            <form action="dashboard.html">
+            <form action="#">
                 <div class="form-group">
-                    <label>Username or Email</label>
+                    <label>{{ __('Username or Email') }}</label>
                     <input type="text" required>
                 </div>
                 <div class="form-group">
-                    <label>Password</label>
+                    <label>{{ __('Password') }}</label>
                     <input type="password" required>
                 </div>
                 <br>
-                <button type="submit" class="btn btn-blue register-btn">Sign In</button>
+                <button type="submit" class="btn btn-blue register-btn">{{ __('Sign In') }}</button>
             </form>
             <br>
-            <p class="auth-switch-text">Don't have an account yet? <a href="/register">Register here</a></p>
+            <p class="auth-switch-text">
+                {{ __("Don't have an account yet?") }} <a href="/register">{{ __('Register here') }}</a>
+            </p>
         </div>
     </main>
 

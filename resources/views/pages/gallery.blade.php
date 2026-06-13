@@ -6,7 +6,7 @@ use function Livewire\Volt\{state};
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paw Forest - Gallery</title>
+    <title>{{ __('Paw Forest - Gallery') }}</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
@@ -17,15 +17,15 @@ use function Livewire\Volt\{state};
                 <h2>🏠 Paw Forest</h2>
             </div>
             <nav class="pub-nav">
-                <a href="/">Home</a> <span>|</span>
-                <a href="/gallery"><b>Gallery</b></a> <span>|</span>
-                <a href="/donations">Donate</a> <span>|</span>
-                <a href="/profile">Profile</a> <span>|</span>
-                <a href="/login">Log in</a> <span>|</span>
+                <a href="/">{{ __('Home') }}</a> <span>|</span>
+                <a href="/gallery"><b>{{ __('Gallery') }}</b></a> <span>|</span>
+                <a href="/donations">{{ __('Donate') }}</a> <span>|</span>
+                <a href="/profile">{{ __('Profile') }}</a> <span>|</span>
+                <a href="/login">{{ __('Log in') }}</a> <span>|</span>
                 
-                <select class="lang-select">
-                    <option value="en" selected>🌐 EN</option>
-                    <option value="lv">🌐 LV</option>
+                <select class="lang-select" onchange="location = this.value;">
+                    <option value="/lang/en" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>🌐 EN</option>
+                    <option value="/lang/lv" {{ app()->getLocale() == 'lv' ? 'selected' : '' }}>🌐 LV</option>
                 </select>
             </nav>
         </div>
@@ -33,16 +33,17 @@ use function Livewire\Volt\{state};
 
     <main class="container">
         <br>
-        <h1>Our Shelter Gallery</h1>
+        <h1>{{ __('Our Shelter Gallery') }}</h1>
+        
         <div class="search-bar-container">
             <div class="search-inputs">
-                <input type="text" placeholder="Search by species, age, location" class="block-card">
-                <button class="btn btn-blue">Search</button>
+                <input type="text" placeholder="{{ __('Search by species, age, location') }}" class="block-card">
+                <button class="btn btn-blue">{{ __('Search') }}</button>
             </div>
             <div>
                 <select class="block-card">
-                    <option>Sort by: Most Recently Added</option>
-                    <option>Sort by: Age</option>
+                    <option>{{ __('Sort by: Most Recently Added') }}</option>
+                    <option>{{ __('Sort by: Age') }}</option>
                 </select>
             </div>
         </div>
@@ -53,7 +54,7 @@ use function Livewire\Volt\{state};
                 <div class="card-info">
                     <h2>Buddy</h2>
                     <p>Dog, 3 years, Riga</p>
-                    <a href="/animal-profile" class="btn btn-green">View Profile</a>
+                    <a href="/animal-profile" class="btn btn-green">{{ __('View Profile') }}</a>
                 </div>
             </div>
             <div class="animal-card block-card">
@@ -61,7 +62,7 @@ use function Livewire\Volt\{state};
                 <div class="card-info">
                     <h2>Whiskers</h2>
                     <p>Cat, 1 year, Rezekne</p>
-                    <a href="/animal-profile" class="btn btn-green">View Profile</a>
+                    <a href="/animal-profile" class="btn btn-green">{{ __('View Profile') }}</a>
                 </div>
             </div>
             <div class="animal-card block-card">
@@ -69,7 +70,7 @@ use function Livewire\Volt\{state};
                 <div class="card-info">
                     <h2>Rocky</h2>
                     <p>Rabbit, 6 months, Ventspils</p>
-                    <a href="/animal-profile" class="btn btn-green">View Profile</a>
+                    <a href="/animal-profile" class="btn btn-green">{{ __('View Profile') }}</a>
                 </div>
             </div>
             <div class="animal-card block-card">
@@ -77,7 +78,7 @@ use function Livewire\Volt\{state};
                 <div class="card-info">
                     <h2>Goldie</h2>
                     <p>Fish, 2 months, Riga</p>
-                    <a href="/animal-profile" class="btn btn-green">View Profile</a>
+                    <a href="/animal-profile" class="btn btn-green">{{ __('View Profile') }}</a>
                 </div>
             </div>
         </section>
