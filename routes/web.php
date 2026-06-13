@@ -25,3 +25,14 @@ Route::view('/admin/applications', 'pages/admin/admin-applications');
 Route::view('/admin/donations', 'pages/admin/admin-donations');
 Route::view('/admin/medicine', 'pages/admin/admin-medicine');
 Route::view('/admin/users', 'pages/admin/admin-users');
+
+// valodas maiņas funkcija
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
+
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'lv'])) {
+        Session::put('locale', $locale);
+    }
+    return redirect()->back();
+});
