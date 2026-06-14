@@ -215,5 +215,9 @@
     "The throttle login error": "Pārāk daudz pieslēgšanās mēģinājumu. Lūdzu, mēģiniet vēlreiz pēc :seconds sekundēm.",
     "Too many login attempts. Please try again in :seconds seconds.": "Pārāk daudz pieslēgšanās mēģinājumu. Lūdzu, mēģiniet vēlreiz pēc :seconds sekundēm.",
     "Active": "Aktīvs",
-    "Deactivated": "Deaktivizēts"
+    "Deactivated": "Deaktivizēts",
+    "{0} 0 years|{1} :count year|[2,*] :count years": "{0} 0 gadi|{1} :count gads|[2,*] :count gadi",
+    "No specific notes or descriptions provided.": "Nav sniegtu specifisku piezīmju vai aprakstu.",
+    "Active Medication & Treatment": "Aktīvie medikamenti un ārstēšana",
+    "No active treatments or medical records found.": "Nav atrasta aktīva ārstēšana vai medicīnisko ierakstu."
 }

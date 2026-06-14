@@ -22,11 +22,9 @@ use function Livewire\Volt\{state};
                 <a href="/donations">{{ __('Donate') }}</a> <span>|</span>
                 @auth
                     <a href="/profile">{{ __('Profile') }}</a>
-
                     @if(auth()->user()->isEmployee())
                         <span>|</span><a href="/dashboard">{{ __('Admin Panel') }}</a>
                     @endif
-
                     <form method="POST" action="/logout">
                         @csrf
                         <button type="submit">{{ __('Log out') }}</button>
@@ -47,36 +45,32 @@ use function Livewire\Volt\{state};
         <br>
         <h1>{{ __('Our Shelter Gallery') }}</h1>
         
-    <section class="gallery-grid" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; width: 100%;">
-    @php
-        $allAnimals = \App\Models\Animal::orderBy('id', 'desc')->get();
-    @endphp
-
-    @if($allAnimals->count() > 0)
-        @foreach($allAnimals as $animal)
-            <div class="animal-card block-card" style="flex: 1 1 250px; max-width: 300px; margin: 0;">
-                @if($animal->image)
-                    <img src="{{ asset($animal->image) }}" alt="{{ $animal->name }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
-                @else
-                    <div class="img-placeholder" style="height: 200px; display: flex; align-items: center; justify-content: center; background: #e2dcd8; border-radius: 8px 8px 0 0;">🐾 No Image</div>
-                @endif
-                <div class="card-info">
-                    <h2>{{ $animal->name }}</h2>
-                    <p>
-                        {{ __($animal->species) }}, 
-                        {{ $animal->age ?? 'N/A' }} {{ __('years') }}, 
-                        {{ $animal->location->name ?? __('Unknown Location') }}
-                    </p>
-                    <a href="/admin/animals/{{ $animal->id }}/edit" class="btn btn-green">{{ __('View Profile') }}</a>
+        <section class="gallery-grid" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; width: 100%;">
+        @if(isset($allAnimals) && $allAnimals->count() > 0)
+            @foreach($allAnimals as $animal)
+                <div class="animal-card block-card" style="flex: 1 1 250px; max-width: 300px; margin: 0;">
+                    @if($animal->image)
+                        <img src="{{ asset($animal->image) }}" alt="{{ $animal->name }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    @else
+                        <div class="img-placeholder" style="height: 200px; display: flex; align-items: center; justify-content: center; background: #e2dcd8; border-radius: 8px 8px 0 0;">🐾 No Image</div>
+                    @endif
+                    <div class="card-info">
+                        <h2>{{ $animal->name }}</h2>
+                        <p>
+                            {{ __($animal->species) }}, 
+                            {{ $animal->age !== null ? trans_choice('{0} 0 years|{1} :count year|[2,*] :count years', $animal->age, ['count' => $animal->age]) : __('N/A') }},
+                            {{ $animal->location ? trim(str_ireplace('Shelter', '', $animal->location->name)) : __('Unknown Location') }}
+                        </p>
+                        <a href="/gallery/{{ $animal->id }}" class="btn btn-green">{{ __('View Profile') }}</a>
+                    </div>
                 </div>
+            @endforeach
+        @else
+            <div class="block-card" style="text-align: center; color: #8a7a74; font-style: italic; padding: 40px; width: 100%;">
+                {{ __('No database records found.') }}
             </div>
-        @endforeach
-    @else
-        <div class="block-card" style="text-align: center; color: #8a7a74; font-style: italic; padding: 40px; width: 100%;">
-            {{ __('No database records found.') }}
-        </div>
-    @endif
-    </section>
+        @endif
+        </section>
     </main>
 
     <footer>

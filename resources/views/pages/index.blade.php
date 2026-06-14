@@ -53,6 +53,7 @@
             </div>
         </section>
 
+        {{-- 📊 Statistikas aprēķini ir atpakaļ mājās, drošībā iekš Blade --}}
         @php
             $adoptedCount = \App\Models\Adoption::where('status', 'Approved')->count();
             $needingHomeCount = \App\Models\Animal::count();
@@ -75,15 +76,13 @@
                 <div class="num stat-purple-num">${{ number_format($latestDonationsSum, 0, '.', ',') }}</div>
             </div>
         </div>
+
         <h2 id="gallery" style="text-align: center; font-size: 2.2rem; margin-top: 40px; margin-bottom: 20px;">
             {{ __('Recently added') }}
         </h2>
         
-        @php
-            $recentAnimals = \App\Models\Animal::orderBy('id', 'desc')->take(4)->get();
-        @endphp
-
-        @if($recentAnimals->count() > 0)
+        {{-- 🐕 Dzīvnieku kartes, kas nāk caur AnimalController --}}
+        @if(isset($recentAnimals) && $recentAnimals->count() > 0)
             <section class="gallery-grid" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; width: 100%;">
                 @foreach($recentAnimals as $animal)
                     <div class="animal-card block-card" style="flex: 1 1 250px; max-width: 300px; margin: 0;">
@@ -96,10 +95,10 @@
                             <h2>{{ $animal->name }}</h2>
                             <p>
                                 {{ __($animal->species) }}, 
-                                {{ __($animal->breed) }}, 
-                                {{ $animal->location->name ?? __('Unknown Location') }}
+                                {{ $animal->age !== null ? trans_choice('{0} 0 years|{1} :count year|[2,*] :count years', $animal->age, ['count' => $animal->age]) : __('N/A') }},
+                                {{ $animal->location ? trim(str_ireplace('Shelter', '', $animal->location->name)) : __('Unknown Location') }}
                             </p>
-                            <a href="/admin/animals/{{ $animal->id }}/edit" class="btn btn-green">{{ __('View Profile') }}</a>
+                            <a href="/gallery/{{ $animal->id }}" class="btn btn-green">{{ __('View Profile') }}</a>
                         </div>
                     </div>
                 @endforeach
@@ -135,6 +134,6 @@
     <footer>
         <p>&copy; 2026 Paw Forest</p>
     </footer>
-    @livewireScripts
+    @livewireStyles
 </body>
 </html>
