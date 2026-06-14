@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 
 Route::view('/', 'pages.index')->name('home');
 Route::view('/gallery', 'pages.gallery');
@@ -27,7 +29,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['admin'])->group(function () {
         Route::view('/admin/donations', 'pages.admin.admin-donations');
-        Route::view('/admin/users', 'pages.admin.admin-users');
+        
+        // 👥 Šī ir VIENĪGĀ rindiņa, ko nomainījām uz kontrolieri, lai rādītu soft-deleted lietotājus:
+        Route::get('/admin/users', [AdminController::class, 'index'])->name('admin.users.index');
+        
         Route::view('/admin/locations', 'pages.admin.admin-locations');
     });
 });
@@ -42,8 +47,6 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('pages.dashboard');
 })->name('dashboard');
-
-use App\Http\Controllers\UserController;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [UserController::class, 'show'])->name('profile.show');

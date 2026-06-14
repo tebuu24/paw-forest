@@ -213,5 +213,7 @@
     "The email must be a valid email address.": "Lūdzu, ievadiet derīgu e-pasta adresi.",
     "These credentials do not match our records.": "Šāds lietotājvārds/e-pasts vai parole netika atrasta.",
     "The throttle login error": "Pārāk daudz pieslēgšanās mēģinājumu. Lūdzu, mēģiniet vēlreiz pēc :seconds sekundēm.",
-    "Too many login attempts. Please try again in :seconds seconds.": "Pārāk daudz pieslēgšanās mēģinājumu. Lūdzu, mēģiniet vēlreiz pēc :seconds sekundēm."
+    "Too many login attempts. Please try again in :seconds seconds.": "Pārāk daudz pieslēgšanās mēģinājumu. Lūdzu, mēģiniet vēlreiz pēc :seconds sekundēm.",
+    "Active": "Aktīvs",
+    "Deactivated": "Deaktivizēts"
 }

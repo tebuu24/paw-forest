@@ -1,5 +1,10 @@
 <?php
 use function Livewire\Volt\{state};
+
+state(['users' => fn () => auth()->user()->isAdmin() 
+    ? \App\Models\User::withTrashed()->orderBy('date_joined', 'desc')->get() 
+    : \App\Models\User::orderBy('date_joined', 'desc')->get()
+]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,6 +69,7 @@ use function Livewire\Volt\{state};
                             <th>{{ __('Password') }}</th>
                             <th>{{ __('Email Address') }}</th>
                             <th>{{ __('Registered Address') }}</th>
+                            <th>{{ __('Status') }}</th>
                             <th>{{ __('Date Joined') }}</th>
                             <th>{{ __('Actions') }}</th>
                         </tr>
@@ -76,20 +82,29 @@ use function Livewire\Volt\{state};
                             <td><input type="text" placeholder="{{ __('Temporary pass') }}" required></td>
                             <td><input type="text" placeholder="{{ __('e.g. john@mail.com') }}" required></td>
                             <td><input type="text" placeholder="{{ __('Street, City') }}" required></td>
+                            <td><span class="auto-id">-</span></td>
                             <td><input type="date" required></td>
                             <td>
                                 <button type="submit" class="btn btn-green table-inline-btn">{{ __('Save') }}</button>
                             </td>
                         </tr>
-                        @foreach(\App\Models\User::all() as $user)
-                            <tr>
+                        {{-- Ciklējam cauri Livewire Volt definētajam $users sarakstam, nevis tiešajam modelim --}}
+                        @foreach($users as $user)
+                            <tr style="{{ $user->trashed() ? 'background-color: #fff3cd; opacity: 0.85;' : '' }}">
                                 <td>#U{{ $user->id }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->username ?? __('N/A') }}</td>
                                 <td>••••••••</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->address ?? __('No address specified') }}</td>
-                                <td>{{ $user->created_at ? $user->created_at->format('Y-m-d') : date('Y-m-d') }}</td>
+                                <td>
+                                    @if($user->trashed())
+                                        <span style="color: #a94442; font-weight: bold;"> {{ __('Deactivated') }}</span>
+                                    @else
+                                        <span style="color: #3c763d;"> {{ __('Active') }}</span>
+                                    @endif
+                                </td>
+                                <td>{{ $user->date_joined ? \Carbon\Carbon::parse($user->date_joined)->format('Y-m-d') : date('Y-m-d') }}</td>
                                 <td class="table-actions">
                                     <a href="/admin/users/{{ $user->id }}/edit" class="btn btn-blue">{{ __('Edit') }}</a>
                                 </td>
