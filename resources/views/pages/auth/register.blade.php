@@ -1,5 +1,4 @@
 <?php
-//jauno lietotāju reģistrācija un datu saglabāšana db
 use function Livewire\Volt\{state};
 ?>
 <!DOCTYPE html>
@@ -8,16 +7,20 @@ use function Livewire\Volt\{state};
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ __('Paw Forest - Register') }}</title>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ time() }}">
 </head>
 <body>
     <header>
         <div class="nav-inner">
             <div class="logo-area">
-                <h2>🏠 Paw Forest</h2>
+                <a href="/" style="text-decoration: none; color: inherit;">
+                    <h2>🏠 Paw Forest</h2>
+                </a>
             </div>
             <nav class="pub-nav">
-                <select class="lang-select" onchange="location = this.value;">
+                <a href="/">{{ __('Home') }}</a> <span>|</span>
+                
+                <select class="lang-select" onchange="location = this.value;" style="margin-left: 5px;">
                     <option value="/lang/en" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>🌐 EN</option>
                     <option value="/lang/lv" {{ app()->getLocale() == 'lv' ? 'selected' : '' }}>🌐 LV</option>
                 </select>

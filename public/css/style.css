@@ -306,6 +306,8 @@ header{
 }
 .logout-btn{
     width: 100%;
+    display: block;
+    box-sizing: border-box;
 }
 .stats-row{
     display: flex;
@@ -723,4 +725,8 @@ footer{
 .pub-nav .btn-nav-auth:hover {
     background-color: #a4cbd6;
     opacity: 0.95;
+}
+
+.margin-bottom-sm {
+    margin-bottom: 12px;
 }

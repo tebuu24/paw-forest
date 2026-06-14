@@ -7,7 +7,7 @@ use function Livewire\Volt\{state};
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ __('Admin Panel - Dashboard') }}</title>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ time() }}">
 </head>
 <body>
 
@@ -38,8 +38,9 @@ use function Livewire\Volt\{state};
                     <option value="/lang/lv" {{ app()->getLocale() == 'lv' ? 'selected' : '' }}>🌐 LV</option>
                 </select>
             </div>
-
             <div>
+                <a href="/" class="btn btn-blue logout-btn margin-bottom-sm">🏠 {{ __('Home') }}</a>
+                
                 <a href="#" class="btn btn-red logout-btn" 
                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     {{ __('Log out') }}
