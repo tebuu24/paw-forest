@@ -49,33 +49,53 @@ use function Livewire\Volt\{state};
         <div class="profile-left-column">
             
             <div class="block-card profile-info-card">
-                <h1>{{ __('User Profile') }}</h1>
-                <br>
-                <form action="#">
+                <h2>{{ __('Edit Profile Information') }}</h2>
+                
+                <form method="POST" action="/profile/update">
+                    @csrf
+                    @method('PUT')
                     <div class="form-group">
-                        <label>{{ __('Name') }}</label>
-                        <input type="text" value="Alice Smith">
+                        <label for="name">{{ __('Full Name') }}</label>
+                        <input type="text" 
+                            id="name" 
+                            name="name" 
+                            value="{{ old('name', auth()->user()->name) }}" 
+                            required>
                     </div>
                     <div class="form-group">
-                        <label>{{ __('Username') }}</label>
-                        <input type="text" value="alice_smith">
+                        <label for="username">{{ __('Username') }}</label>
+                        <input type="text" 
+                            id="username" 
+                            name="username" 
+                            value="{{ old('username', auth()->user()->username) }}" 
+                            required>
                     </div>
                     <div class="form-group">
-                        <label>{{ __('Email') }}</label>
-                        <input type="email" value="alice.smith@example.com">
+                        <label for="email">{{ __('Email Address') }}</label>
+                        <input type="email" 
+                            id="email" 
+                            name="email" 
+                            value="{{ old('email', auth()->user()->email) }}" 
+                            required>
                     </div>
                     <div class="form-group">
-                        <label>{{ __('Address') }}</label>
-                        <input type="text" value="Meowtown street 5a, Meowville">
+                        <label for="address">{{ __('Address') }}</label>
+                        <input type="text" 
+                            id="address" 
+                            name="address" 
+                            placeholder="{{ __('Street, City, Postal Code') }}"
+                            value="{{ old('address', auth()->user()->address) }}" 
+                            required>
                     </div>
-                    <br>
-                    <button type="submit" class="btn btn-blue profile-update-btn">{{ __('Update Information') }}</button>
+
+                    <button type="submit" class="btn btn-blue profile-update-btn">
+                        {{ __('Save Changes') }}
+                    </button>
                 </form>
             </div>
 
             <div class="block-card profile-security-card">
                 <h2>{{ __('Security Settings') }}</h2>
-                <br>
                 <form action="#" class="security-form">
                     <h3>{{ __('Change Password') }}</h3>
                     <div class="form-group">
