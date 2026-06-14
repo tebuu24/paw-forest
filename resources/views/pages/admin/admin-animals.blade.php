@@ -99,9 +99,16 @@ use function Livewire\Volt\{state};
                                 <tr>
                                     <td>#{{ sprintf('%03d', $animal->id) }}</td>
                                     <td>
-                                        <div class="img-placeholder" style="width: 45px; height: 45px; border-radius: 6px; background-color: #e2dcd8; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; border: 1px dashed #bbaaa2;">
-                                            🐾
+                                        <div style="width: 45px; height: 45px; border-radius: 6px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #bbaaa2;">
+                                            @if($animal->image)
+                                                <img src="{{ asset($animal->image) }}" alt="{{ $animal->name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                            @else
+                                                <div style="width: 100%; height: 100%; background-color: #e2dcd8; display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
+                                                    🐾
+                                                </div>
+                                            @endif
                                         </div>
+                                    </td>
                                     </td>
                                     <td>{{ $animal->name }}</td>
                                     <td>{{ __($animal->species) }}</td>

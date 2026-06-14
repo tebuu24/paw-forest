@@ -87,7 +87,11 @@
             <section class="gallery-grid" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; width: 100%;">
                 @foreach($recentAnimals as $animal)
                     <div class="animal-card block-card" style="flex: 1 1 250px; max-width: 300px; margin: 0;">
-                        <div class="img-placeholder"></div>
+                        @if($animal->image)
+                            <img src="{{ asset($animal->image) }}" alt="{{ $animal->name }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                        @else
+                            <div class="img-placeholder" style="height: 200px; display: flex; align-items: center; justify-content: center; background: #e2dcd8; border-radius: 8px 8px 0 0;">🐾 No Image</div>
+                        @endif
                         <div class="card-info">
                             <h2>{{ $animal->name }}</h2>
                             <p>
