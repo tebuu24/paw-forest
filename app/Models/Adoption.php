@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Adoption extends Model
 {
     use SoftDeletes;
+    public $timestamps = false;
 
     protected $fillable = [
         'date',
@@ -25,7 +26,7 @@ class Adoption extends Model
 
     public function animal()
     {
-        return $this->belongsTo(Animal::class);
+        return $this->belongsTo(\App\Models\Animal::class, 'animal_id');
     }
 
     public function employee()

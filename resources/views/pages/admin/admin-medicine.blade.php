@@ -50,7 +50,6 @@ use function Livewire\Volt\{state};
                 </form>
             </div>
         </aside>
-
         <main class="admin-main">
             <h1>{{ __('Animal Medications Log') }}</h1>
             <br>
@@ -59,7 +58,7 @@ use function Livewire\Volt\{state};
                 <table>
                     <thead>
                         <tr>
-                            <th>{{ __('Medication') }}</th>
+                            <th>{{ __('Medication ID') }}</th>
                             <th>{{ __('Animal') }}</th>
                             <th>{{ __('Medicine Name') }}</th>
                             <th>{{ __('Description') }}</th>
@@ -86,20 +85,37 @@ use function Livewire\Volt\{state};
                                 <button type="submit" class="btn btn-green table-inline-btn">{{ __('Save') }}</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td>#M55</td>
-                            <td>#001</td>
-                            <td>Apoquel</td>
-                            <td>Allergy relief</td>
-                            <td>Orally</td>
-                            <td>Once a day</td>
-                            <td>2026-06-01</td>
-                            <td>2026-06-30</td>
-                            <td>#E12</td>
-                            <td class="table-actions">
-                                <a href="#" class="btn btn-blue">{{ __('Edit') }}</a>
-                            </td>
-                        </tr>
+
+                        @php
+                            $medicines = \App\Models\Medicine::all();
+                        @endphp
+
+                        @if($medicines->count() > 0)
+                            @foreach($medicines as $med)
+                                <tr>
+                                    <td>#M{{ $med->id }}</td>
+                                    <td>
+                                        #{{ $med->animal_id }} {{ $med->animal->name ?? '' }}
+                                    </td>
+                                    <td>{{ $med->name }}</td>
+                                    <td>{{ $med->description }}</td>
+                                    <td>{{ $med->method_of_use }}</td>
+                                    <td>{{ $med->frequency }}</td>
+                                    <td>{{ $med->date_from }}</td>
+                                    <td>{{ $med->date_until }}</td>
+                                    <td>#E{{ $med->employee_id }}</td>
+                                    <td class="table-actions">
+                                        <a href="/admin/medicine/{{ $med->id }}/edit" class="btn btn-blue">{{ __('Edit') }}</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="10" style="text-align: center; color: #8a7a74; font-style: italic; padding: 20px;">
+                                    {{ __('No database records found.') }}
+                                </td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>

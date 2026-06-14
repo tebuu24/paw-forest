@@ -50,7 +50,6 @@ use function Livewire\Volt\{state};
                 </form>
             </div>
         </aside>
-
         <main class="admin-main">
             <h1>{{ __('Registered User Profiles') }}</h1>
             <br>
@@ -58,7 +57,7 @@ use function Livewire\Volt\{state};
                 <table>
                     <thead>
                         <tr>
-                            <th>{{ __('User') }}</th>
+                            <th>{{ __('User ID') }}</th>
                             <th>{{ __('Name') }}</th>
                             <th>{{ __('Username') }}</th>
                             <th>{{ __('Password') }}</th>
@@ -81,30 +80,20 @@ use function Livewire\Volt\{state};
                                 <button type="submit" class="btn btn-green table-inline-btn">{{ __('Save') }}</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td>#U44</td>
-                            <td>Alice Smith</td>
-                            <td>alice_smith</td>
-                            <td>••••••••</td>
-                            <td>alice.smith@example.com</td>
-                            <td>Meowtown street 5a, Meowville</td>
-                            <td>2026-01-10</td>
-                            <td class="table-actions">
-                                <a href="#" class="btn btn-blue">{{ __('Edit') }}</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#U89</td>
-                            <td>John Doe</td>
-                            <td>johndoe99</td>
-                            <td>••••••••</td>
-                            <td>john.doe@example.com</td>
-                            <td>Barking Ave 12, Riga</td>
-                            <td>2026-03-22</td>
-                            <td class="table-actions">
-                                <a href="#" class="btn btn-blue">{{ __('Edit') }}</a>
-                            </td>
-                        </tr>
+                        @foreach(\App\Models\User::all() as $user)
+                            <tr>
+                                <td>#U{{ $user->id }}</td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->username ?? __('N/A') }}</td>
+                                <td>••••••••</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->address ?? __('No address specified') }}</td>
+                                <td>{{ $user->created_at ? $user->created_at->format('Y-m-d') : date('Y-m-d') }}</td>
+                                <td class="table-actions">
+                                    <a href="/admin/users/{{ $user->id }}/edit" class="btn btn-blue">{{ __('Edit') }}</a>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

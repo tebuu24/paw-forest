@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Location extends Model
 {
     use SoftDeletes;
+    public $timestamps = false;
 
     protected $fillable = [
         'name',

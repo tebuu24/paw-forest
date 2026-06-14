@@ -174,5 +174,6 @@
     "Admin Panel":"Admin Panel",
     "Save Changes":"Save Changes",
     "You have no scheduled shelter visits yet.":"You have no scheduled shelter visits yet.",
-    "You have not submitted any adoption applications yet.":"You have not submitted any adoption applications yet."
+    "You have not submitted any adoption applications yet.":"You have not submitted any adoption applications yet.",
+    "No database records found.":"No database records found."
 }

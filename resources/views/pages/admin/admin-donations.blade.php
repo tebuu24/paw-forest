@@ -86,15 +86,42 @@ use function Livewire\Volt\{state};
                                 <button type="submit" class="btn btn-green table-inline-btn">{{ __('Save') }}</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td>#D991</td>
-                            <td>#U44</td>
-                            <td>2026-06-11</td>
-                            <td><b class="stat-green-num">$50.00</b></td>
-                            <td>Credit Card</td>
-                            <td>Keep up the great work!</td>
-                            <td>-</td>
-                        </tr>
+
+                        @php
+                            // Assumes the model name follows the singular format: Donation
+                            $donations = \App\Models\Donation::all();
+                        @endphp
+
+                        @if($donations->count() > 0)
+                            @foreach($donations as $donation)
+                                <tr>
+                                    <td>#D{{ $donation->id }}</td>
+                                    <td>
+                                        #U{{ $donation->users_id }} 
+                                        <small style="color: #8a7a74; display: block;">
+                                            {{ $donation->user->name ?? '' }}
+                                        </small>
+                                    </td>
+                                    <td>{{ $donation->date }}</td>
+                                    <td>
+                                        <b class="stat-green-num">
+                                            ${{ number_format($donation->amount, 2) }}
+                                        </b>
+                                    </td>
+                                    <td>{{ __($donation->method_of_payment) }}</td>
+                                    <td>{{ $donation->message ?? '-' }}</td>
+                                    <td class="table-actions">
+                                        <a href="/admin/donations/{{ $donation->id }}/edit" class="btn btn-blue">{{ __('Edit') }}</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="7" style="text-align: center; color: #8a7a74; font-style: italic; padding: 20px;">
+                                    {{ __('No database records found.') }}
+                                </td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>

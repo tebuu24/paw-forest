@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Visit extends Model
 {
     use SoftDeletes;
+    public $timestamps = false;
 
     protected $fillable = [
         'date',
@@ -31,7 +32,7 @@ class Visit extends Model
 
     public function animal()
     {
-        return $this->belongsTo(Animal::class);
+        return $this->belongsTo(\App\Models\Animal::class, 'animal_id');
     }
 
     public function location()

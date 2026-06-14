@@ -88,19 +88,41 @@ use function Livewire\Volt\{state};
                             </td>
                         </tr>
                         
-                        <tr>
-                            <td>#001</td>
-                            <td>Buddy</td>
-                            <td>Dog</td>
-                            <td>Golden Retriever</td>
-                            <td>Female</td>
-                            <td>Healthy</td>
-                            <td>Riga</td>
-                            <td>2025-04-10</td>
-                            <td class="table-actions">
-                                <a href="#" class="btn btn-blue">{{ __('Edit') }}</a>
-                            </td>
-                        </tr>
+                        @php
+                            $animals = \App\Models\Animal::all();
+                        @endphp
+
+                        @if($animals->count() > 0)
+                            @foreach($animals as $animal)
+                                <tr>
+                                    <td>#{{ sprintf('%03d', $animal->id) }}</td>
+                                    <td>{{ $animal->name }}</td>
+                                    <td>{{ __($animal->species) }}</td>
+                                    <td>{{ __($animal->breed) }}</td>
+                                    <td>{{ __($animal->gender) }}</td>
+                                    <td>{{ __($animal->health_status) }}</td>
+                                    <td>
+                                        {{ $animal->location->name ?? __('Unknown Location') }}
+                                    </td>
+                                    <td>
+                                        @if($animal->date_added)
+                                            {{ \Carbon\Carbon::parse($animal->date_added)->format('Y-m-d') }}
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                    <td class="table-actions">
+                                        <a href="/admin/animals/{{ $animal->id }}/edit" class="btn btn-blue">{{ __('Edit') }}</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="9" style="text-align: center; color: #8a7a74; font-style: italic; padding: 20px;">
+                                    {{ __('No database records found.') }}
+                                </td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>

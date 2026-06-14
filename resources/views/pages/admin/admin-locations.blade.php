@@ -60,8 +60,7 @@ use function Livewire\Volt\{state};
                         <tr>
                             <th>{{ __('Location ID') }}</th>
                             <th>{{ __('City Name') }}</th>
-                            <th>{{ __('Specific Address') }}</th>
-                            <th>{{ __('Contact Phone') }}</th>
+                            <th>{{ __('Address') }}</th>
                             <th>{{ __('Actions') }}</th>
                         </tr>
                     </thead>
@@ -70,38 +69,21 @@ use function Livewire\Volt\{state};
                             <td><span class="auto-id">{{ __('Auto') }}</span></td>
                             <td><input type="text" placeholder="{{ __('e.g. Valmiera') }}" required></td>
                             <td><input type="text" placeholder="{{ __('e.g. Parka iela 12') }}" required></td>
-                            <td><input type="text" placeholder="{{ __('e.g. +371 20000000') }}" required></td>
                             <td>
                                 <button type="submit" class="btn btn-green table-inline-btn">{{ __('Save') }}</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td>#L01</td>
-                            <td>Riga</td>
-                            <td>Meowtown street 5a, Riga</td>
-                            <td>+371 67123456</td>
-                            <td class="table-actions">
-                                <a href="#" class="btn btn-blue">{{ __('Edit') }}</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#L02</td>
-                            <td>Rezekne</td>
-                            <td>Barking Ave 12, Rezekne</td>
-                            <td>+371 64612345</td>
-                            <td class="table-actions">
-                                <a href="#" class="btn btn-blue">{{ __('Edit') }}</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#L03</td>
-                            <td>Ventspils</td>
-                            <td>Fluffy Lane 8, Ventspils</td>
-                            <td>+371 63688888</td>
-                            <td class="table-actions">
-                                <a href="#" class="btn btn-blue">{{ __('Edit') }}</a>
-                            </td>
-                        </tr>
+
+                        @foreach(\App\Models\Location::all() as $location)
+                            <tr>
+                                <td>#L{{ sprintf('%02d', $location->id) }}</td>
+                                <td>{{ $location->name }}</td>
+                                <td>{{ $location->address }}</td>
+                                <td class="table-actions">
+                                    <a href="/admin/locations/{{ $location->id }}/edit" class="btn btn-blue">{{ __('Edit') }}</a>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

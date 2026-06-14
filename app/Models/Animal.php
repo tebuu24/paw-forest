@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Animal extends Model
 {
+    public $timestamps = false;
     use SoftDeletes;
 
     protected $fillable = [

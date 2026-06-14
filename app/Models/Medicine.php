@@ -25,8 +25,8 @@ class Medicine extends Model
         return $this->belongsTo(Employee::class);
     }
 
-    public function animal()
+  public function animal()
     {
-        return $this->belongsTo(Animal::class);
+        return $this->belongsTo(\App\Models\Animal::class, 'animal_id');
     }
 }

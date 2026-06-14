@@ -54,21 +54,26 @@ use function Livewire\Volt\{state};
         <main class="admin-main">
             <h1>{{ __('Dashboard Overview') }}</h1>
 
+            @php
+                $totalAnimals = \App\Models\Animal::count();
+                $pendingAdoptions = \App\Models\Adoption::where('status', 'Pending')->count();
+                $totalDonations = class_exists('\App\Models\Donation') ? \App\Models\Donation::sum('amount') : 2500;
+            @endphp
+
             <div class="stats-row">
                 <div class="admin-stat-card block-card">
                     <h2>{{ __('Animals Registered') }}</h2>
-                    <div class="num stat-green-num">169</div>
+                    <div class="num stat-green-num">{{ $totalAnimals }}</div>
                 </div>
                 <div class="admin-stat-card block-card">
                     <h2>{{ __('Pending Adoptions') }}</h2>
-                    <div class="num stat-red-num">14</div>
+                    <div class="num stat-red-num">{{ $pendingAdoptions }}</div>
                 </div>
                 <div class="admin-stat-card block-card">
                     <h2>{{ __('Total Donations Received') }}</h2>
-                    <div class="num stat-purple-num">$2,500</div>
+                    <div class="num stat-purple-num">${{ number_format($totalDonations, 0, '.', ',') }}</div>
                 </div>
             </div>
-
             <section class="block-card">
                 <h2>{{ __('Recent Adoption Requests') }}</h2>
                 <table>
@@ -84,30 +89,43 @@ use function Livewire\Volt\{state};
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>#A01</td>
-                            <td>2026-06-12</td>
-                            <td>Anna</td>
-                            <td>Murris</td>
-                            <td>Ella</td>
-                            <td><span class="stat-purple-num">{{ __('Reviewing') }}</span></td>
-                            <td>
-                                <button class="btn btn-green">{{ __('Approve') }}</button>
-                                <button class="btn btn-red">{{ __('Reject') }}</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#A02</td>
-                            <td>2026-06-11</td>
-                            <td>Janis</td>
-                            <td>Daisy</td>
-                            <td>Ella</td>
-                            <td><span class="stat-purple-num">{{ __('Reviewing') }}</span></td>
-                            <td>
-                                <button class="btn btn-green">{{ __('Approve') }}</button>
-                                <button class="btn btn-red">{{ __('Reject') }}</button>
-                            </td>
-                        </tr>
+                        @php
+                            // Paņemam pēdējos 5 pieteikumus, lai nepārslogotu sākumlapu
+                            $recentAdoptions = \App\Models\Adoption::orderBy('id', 'desc')->take(5)->get();
+                        @endphp
+
+                        @if($recentAdoptions->count() > 0)
+                            @foreach($recentAdoptions as $adoption)
+                                <tr>
+                                    <td>#A{{ sprintf('%02d', $adoption->id) }}</td>
+                                    <td>{{ $adoption->date }}</td>
+                                    <td>{{ $adoption->user->name ?? __('Unknown') }}</td>
+                                    <td>{{ $adoption->animal->name ?? __('Unknown') }}</td>
+                                    <td>
+                                        {{ $adoption->employee->user->name ?? __('Unassigned') }}
+                                    </td>
+                                    <td>
+                                        @if(strtolower($adoption->status) === 'approved')
+                                            <span class="stat-green-num">{{ __('Approved') }}</span>
+                                        @elseif(strtolower($adoption->status) === 'rejected')
+                                            <span class="stat-red-num">{{ __('Rejected') }}</span>
+                                        @else
+                                            <span class="stat-purple-num">{{ __('Pending') }}</span>
+                                        @endif
+                                    </td>
+                                    <td class="table-actions">
+                                        <button class="btn btn-green">{{ __('Approve') }}</button>
+                                        <button class="btn btn-red">{{ __('Reject') }}</button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="7" style="text-align: center; color: #8a7a74; font-style: italic; padding: 20px;">
+                                    {{ __('No database records found.') }}
+                                </td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             </section>
@@ -117,7 +135,7 @@ use function Livewire\Volt\{state};
                 <table>
                     <thead>
                         <tr>
-                            <th>{{ __('Animal') }}</th>
+                            <th>{{ __('ID') }}</th>
                             <th>{{ __('Name') }}</th>
                             <th>{{ __('Species') }}</th>
                             <th>{{ __('Health Status') }}</th>
@@ -126,26 +144,35 @@ use function Livewire\Volt\{state};
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Riga</td>
-                            <td>Buddy</td>
-                            <td>Dog</td>
-                            <td>Healthy & Vaccinated</td>
-                            <td>#L01</td>
-                            <td>
-                                <button class="btn btn-blue">{{ __('Edit') }}</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Rezekne</td>
-                            <td>Luna</td>
-                            <td>Cat</td>
-                            <td>Needs Medical Treatment</td>
-                            <td>#L01</td>
-                            <td>
-                                <button class="btn btn-blue">{{ __('Edit') }}</button>
-                            </td>
-                        </tr>
+                        @php
+                            // Paņemam pēdējos 5 reģistrētos dzīvniekus tracking tabulai
+                            $trackedAnimals = \App\Models\Animal::orderBy('id', 'desc')->take(5)->get();
+                        @endphp
+
+                        @if($trackedAnimals->count() > 0)
+                            @foreach($trackedAnimals as $animal)
+                                <tr>
+                                    <td>#{{ sprintf('%03d', $animal->id) }}</td>
+                                    <td>{{ $animal->name }}</td>
+                                    <td>{{ __($animal->species) }}</td>
+                                    <td>
+                                        {{ __($animal->health_status) }}
+                                    </td>
+                                    <td>
+                                        {{ $animal->location->name ?? __('Unknown') }}
+                                    </td>
+                                    <td class="table-actions">
+                                        <a href="/admin/animals/{{ $animal->id }}/edit" class="btn btn-blue">{{ __('Edit') }}</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="6" style="text-align: center; color: #8a7a74; font-style: italic; padding: 20px;">
+                                    {{ __('No database records found.') }}
+                                </td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             </section>

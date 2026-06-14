@@ -53,62 +53,58 @@
             </div>
         </section>
 
+        @php
+            $adoptedCount = \App\Models\Adoption::where('status', 'Approved')->count();
+            $needingHomeCount = \App\Models\Animal::count();
+            $latestDonationsSum = class_exists('\App\Models\Donation') ? \App\Models\Donation::sum('amount') : 2500;
+        @endphp
+
         <div class="stats-row">
             <div class="admin-stat-card block-card">
                 <div class="stat-icon-label">{{ __('Animals Adopted') }}</div>
-                <div class="num stat-green-num">124</div>
+                <div class="num stat-green-num">{{ $adoptedCount }}</div>
             </div>
 
             <div class="admin-stat-card block-card">
                 <div class="stat-icon-label">{{ __('Animals Needing a Home') }}</div>
-                <div class="num stat-red-num">45</div>
+                <div class="num stat-red-num">{{ $needingHomeCount }}</div>
             </div>
 
             <div class="admin-stat-card block-card">
                 <div class="stat-icon-label">{{ __('Latest Donations') }}</div>
-                <div class="num stat-purple-num">$2,500</div>
+                <div class="num stat-purple-num">${{ number_format($latestDonationsSum, 0, '.', ',') }}</div>
             </div>
         </div>
-
-        <h2 id="gallery">{{ __('Recently added') }}</h2>
+        <h2 id="gallery" style="text-align: center; font-size: 2.2rem; margin-top: 40px; margin-bottom: 20px;">
+            {{ __('Recently added') }}
+        </h2>
         
-        <section class="gallery-grid">
-            <div class="animal-card block-card">
-                <div class="img-placeholder"></div>
-                <div class="card-info">
-                    <h2>Buddy</h2>
-                    <p>Dog, 3 years, Riga</p>
-                    <a href="/animal-profile" class="btn btn-green">{{ __('View Profile') }}</a>
-                </div>
-            </div>
+        @php
+            $recentAnimals = \App\Models\Animal::orderBy('id', 'desc')->take(4)->get();
+        @endphp
 
-            <div class="animal-card block-card">
-                <div class="img-placeholder"></div>
-                <div class="card-info">
-                    <h2>Whiskers</h2>
-                    <p>Cat, 1 year, Rezekne</p>
-                    <a href="/animal-profile" class="btn btn-green">{{ __('View Profile') }}</a>
-                </div>
+        @if($recentAnimals->count() > 0)
+            <section class="gallery-grid" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; width: 100%;">
+                @foreach($recentAnimals as $animal)
+                    <div class="animal-card block-card" style="flex: 1 1 250px; max-width: 300px; margin: 0;">
+                        <div class="img-placeholder"></div>
+                        <div class="card-info">
+                            <h2>{{ $animal->name }}</h2>
+                            <p>
+                                {{ __($animal->species) }}, 
+                                {{ __($animal->breed) }}, 
+                                {{ $animal->location->name ?? __('Unknown Location') }}
+                            </p>
+                            <a href="/admin/animals/{{ $animal->id }}/edit" class="btn btn-green">{{ __('View Profile') }}</a>
+                        </div>
+                    </div>
+                @endforeach
+            </section>
+        @else
+            <div class="block-card" style="text-align: center; color: #8a7a74; font-style: italic; padding: 40px; margin-bottom: 30px;">
+                {{ __('No database records found.') }}
             </div>
-
-            <div class="animal-card block-card">
-                <div class="img-placeholder"></div>
-                <div class="card-info">
-                    <h2>Rocky</h2>
-                    <p>Rabbit, 6 months, Ventspils</p>
-                    <a href="/animal-profile" class="btn btn-green">{{ __('View Profile') }}</a>
-                </div>
-            </div>
-
-            <div class="animal-card block-card">
-                <div class="img-placeholder"></div>
-                <div class="card-info">
-                    <h2>Goldie</h2>
-                    <p>Fish, 2 months, Riga</p>
-                    <a href="/animal-profile" class="btn btn-green">{{ __('View Profile') }}</a>
-                </div>
-            </div>
-        </section>
+        @endif
 
         <div>
             <livewire:animal-fact />

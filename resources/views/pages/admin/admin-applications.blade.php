@@ -48,7 +48,6 @@ use function Livewire\Volt\{state};
                 </form>
             </div>
         </aside>
-
         <main class="admin-main">
             <h1>{{ __('Adoption Requests') }}</h1>
             <div class="block-card">
@@ -59,7 +58,7 @@ use function Livewire\Volt\{state};
                             <th>{{ __('Date') }}</th>
                             <th>{{ __('User') }}</th>
                             <th>{{ __('Animal') }}</th>
-                            <th>{{ __('Employee') }}</th>
+                            <th>{{ __('Employee Representative') }}</th>
                             <th>{{ __('Comment') }}</th>
                             <th>{{ __('Status') }}</th>
                             <th>{{ __('Actions') }}</th>
@@ -84,19 +83,44 @@ use function Livewire\Volt\{state};
                                 <button type="submit" class="btn btn-green table-inline-btn">{{ __('Save') }}</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td>#A01</td>
-                            <td>2026-05-12</td>
-                            <td>#U44</td>
-                            <td>#001</td>
-                            <td>#E12</td>
-                            <td>Has a large backyard.</td>
-                            <td><span class="stat-purple-num">{{ __('Pending') }}</span></td>
-                            <td class="table-actions">
-                                <button class="btn btn-green">{{ __('Approve') }}</button>
-                                <button class="btn btn-red">{{ __('Reject') }}</button>
-                            </td>
-                        </tr>
+
+                        @php
+                            $adoptions = \App\Models\Adoption::all();
+                        @endphp
+
+                        @if($adoptions->count() > 0)
+                            @foreach($adoptions as $adoption)
+                                <tr>
+                                    <td>#A{{ sprintf('%02d', $adoption->id) }}</td>
+                                    <td>{{ $adoption->date }}</td>
+                                    <td>#U{{ $adoption->user_id }} {{ $adoption->user->name ?? '' }}</td>
+                                    <td>#{{ $adoption->animal_id }} {{ $adoption->animal->name ?? '' }}</td>
+                                    <td>
+                                        {{ $adoption->employee->user->name ?? __('Unassigned') }}
+                                    </td>
+                                    <td>{{ $adoption->comment ?? '-' }}</td>
+                                    <td>
+                                        @if(strtolower($adoption->status) === 'approved')
+                                            <span class="stat-green-num">{{ __('Approved') }}</span>
+                                        @elseif(strtolower($adoption->status) === 'rejected')
+                                            <span class="stat-red-num">{{ __('Rejected') }}</span>
+                                        @else
+                                            <span class="stat-purple-num">{{ __('Pending') }}</span>
+                                        @endif
+                                    </td>
+                                    <td class="table-actions">
+                                        <button class="btn btn-green">{{ __('Approve') }}</button>
+                                        <button class="btn btn-red">{{ __('Reject') }}</button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="8" style="text-align: center; color: #8a7a74; font-style: italic; padding: 20px;">
+                                    {{ __('No database records found.') }}
+                                </td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -113,7 +137,7 @@ use function Livewire\Volt\{state};
                             <th>{{ __('User') }}</th>
                             <th>{{ __('Animal') }}</th>
                             <th>{{ __('Shelter Location') }}</th>
-                            <th>{{ __('Employee') }}</th>
+                            <th>{{ __('Employee Representative') }}</th>
                             <th>{{ __('Comment') }}</th>
                             <th>{{ __('Actions') }}</th>
                         </tr>
@@ -131,19 +155,36 @@ use function Livewire\Volt\{state};
                                 <button type="submit" class="btn btn-green table-inline-btn">{{ __('Save') }}</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td>#V01</td>
-                            <td>2026-06-15</td>
-                            <td>#U44</td>
-                            <td>#002</td>
-                            <td>#L01</td>
-                            <td>#E12</td>
-                            <td>Wants to see cat character.</td>
-                            <td class="table-actions">
-                                <button class="btn btn-green">{{ __('Approve') }}</button>
-                                <button class="btn btn-red">{{ __('Reject') }}</button>
-                            </td>
-                        </tr>
+
+                        @php
+                            $visits = \App\Models\Visit::all();
+                        @endphp
+
+                        @if($visits->count() > 0)
+                            @foreach($visits as $visit)
+                                <tr>
+                                    <td>#V{{ sprintf('%02d', $visit->id) }}</td>
+                                    <td>{{ $visit->date }}</td>
+                                    <td>#U{{ $visit->user_id }} {{ $visit->user->name ?? '' }}</td>
+                                    <td>#{{ $visit->animal_id }} {{ $visit->animal->name ?? '' }}</td>
+                                    <td>#L{{ $visit->location_id }} {{ $visit->location->name ?? '' }}</td>
+                                    <td>
+                                        {{ $visit->employee->user->name ?? __('Unassigned') }}
+                                    </td>
+                                    <td>{{ $visit->comment ?? '-' }}</td>
+                                    <td class="table-actions">
+                                        <button class="btn btn-green">{{ __('Approve') }}</button>
+                                        <button class="btn btn-red">{{ __('Reject') }}</button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="8" style="text-align: center; color: #8a7a74; font-style: italic; padding: 20px;">
+                                    {{ __('No database records found.') }}
+                                </td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -151,3 +192,4 @@ use function Livewire\Volt\{state};
     </div>
 </body>
 </html>
+
