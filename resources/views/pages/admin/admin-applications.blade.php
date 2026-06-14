@@ -109,10 +109,19 @@ use function Livewire\Volt\{state};
                                             <span class="stat-purple-num">{{ __('Pending') }}</span>
                                         @endif
                                     </td>
-                                    <td class="table-actions">
-                                        <button class="btn btn-green">{{ __('Approve') }}</button>
-                                        <button class="btn btn-red">{{ __('Reject') }}</button>
-                                    </td>
+                                        <td class="action-buttons-cell">
+                                            <form action="/admin/applications/{{ $adoption->id }}/approve" method="POST" style="display: inline-block;">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn-table-action btn-green">{{ __('Approve') }}</button>
+                                            </form>
+
+                                            <form action="/admin/applications/{{ $adoption->id }}/reject" method="POST" style="display: inline-block;">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn-table-action btn-red">{{ __('Reject') }}</button>
+                                            </form>
+                                        </td>
                                 </tr>
                             @endforeach
                         @else
@@ -173,10 +182,19 @@ use function Livewire\Volt\{state};
                                         {{ $visit->employee->user->name ?? __('Unassigned') }}
                                     </td>
                                     <td>{{ $visit->comment ?? '-' }}</td>
-                                    <td class="table-actions">
-                                        <button class="btn btn-green">{{ __('Approve') }}</button>
-                                        <button class="btn btn-red">{{ __('Reject') }}</button>
-                                    </td>
+                                        <td class="action-buttons-cell">
+                                            <form action="/admin/applications/{{ $adoption->id }}/approve" method="POST" style="display: inline-block;">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn-table-action btn-green">{{ __('Approve') }}</button>
+                                            </form>
+
+                                            <form action="/admin/applications/{{ $adoption->id }}/reject" method="POST" style="display: inline-block;">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn-table-action btn-red">{{ __('Reject') }}</button>
+                                            </form>
+                                        </td>
                                 </tr>
                             @endforeach
                         @else

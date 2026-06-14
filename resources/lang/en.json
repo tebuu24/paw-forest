@@ -164,7 +164,7 @@
     "Street, City": "Street, City",
     "Manage Shelter Locations": "Manage Shelter Locations",
     "Location ID": "Location ID",
-    "City Name": "City Name",
+    "Shelter Name": "Shelter Name",
     "Specific Address": "Specific Address",
     "Contact Phone": "Contact Phone",
     "Actions": "Actions",
@@ -175,5 +175,15 @@
     "Save Changes":"Save Changes",
     "You have no scheduled shelter visits yet.":"You have no scheduled shelter visits yet.",
     "You have not submitted any adoption applications yet.":"You have not submitted any adoption applications yet.",
-    "No database records found.":"No database records found."
+    "No database records found.":"No database records found.",
+    "Orāli":"Orally",
+    "Pilieni":"Drops",
+    "Ar pārtiku":"With Food",
+    "Injekcija": "Injection",
+    "Pilieni ausīs":"Ear Drops",
+    "Uz ādas":"On Skin",
+    "Vienreizēji":"One Time",
+    "1x dienā":"1x Per Day",
+    "2x dienā": "2x Per Day",
+    "3x dienā": "3x Per Day"
 }

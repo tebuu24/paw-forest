@@ -136,7 +136,7 @@ use function Livewire\Volt\{state};
                 <table>
                     <thead>
                         <tr>
-                            <th>{{ __('ID') }}</th>
+                            <th>{{ __('Animal ID') }}</th>
                             <th>{{ __('Name') }}</th>
                             <th>{{ __('Species') }}</th>
                             <th>{{ __('Health Status') }}</th>

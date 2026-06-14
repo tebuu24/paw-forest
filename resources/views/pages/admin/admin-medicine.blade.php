@@ -59,7 +59,7 @@ use function Livewire\Volt\{state};
                 <table>
                     <thead>
                         <tr>
-                            <th>{{ __('Medication ID') }}</th>
+                            <th>{{ __('ID') }}</th>
                             <th>{{ __('Animal') }}</th>
                             <th>{{ __('Medicine Name') }}</th>
                             <th>{{ __('Description') }}</th>
@@ -100,11 +100,11 @@ use function Livewire\Volt\{state};
                                     </td>
                                     <td>{{ $med->name }}</td>
                                     <td>{{ $med->description }}</td>
-                                    <td>{{ $med->method_of_use }}</td>
-                                    <td>{{ $med->frequency }}</td>
+                                    <td>{{ __($med->method_of_use) }}</td>
+                                    <td>{{ __($med->frequency) }}</td>
                                     <td>{{ $med->date_from }}</td>
                                     <td>{{ $med->date_until }}</td>
-                                    <td>#E{{ $med->employee_id }}</td>
+                                    <td>#E{{ $med->employee_id }} <span style="color: #665c54; font-size: 0.9rem;">({{ $med->employee->name ?? __('Unknown') }})</span></td>
                                     <td class="table-actions">
                                         <a href="/admin/medicine/{{ $med->id }}/edit" class="btn btn-blue">{{ __('Edit') }}</a>
                                     </td>

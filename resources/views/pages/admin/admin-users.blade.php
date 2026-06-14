@@ -58,7 +58,7 @@ use function Livewire\Volt\{state};
                 <table>
                     <thead>
                         <tr>
-                            <th>{{ __('User ID') }}</th>
+                            <th>{{ __('ID') }}</th>
                             <th>{{ __('Name') }}</th>
                             <th>{{ __('Username') }}</th>
                             <th>{{ __('Password') }}</th>

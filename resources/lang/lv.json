@@ -167,7 +167,7 @@
     "Street, City": "Iela, pilsēta",
     "Manage Shelter Locations": "Pārvaldīt patversmes lokācijas",
     "Location ID": "Lokācijas ID",
-    "City Name": "Pilsētas nosaukums",
+    "Shelter Name": "Patversmes nosaukums",
     "Specific Address": "Konkrēta adrese",
     "Contact Phone": "Kontakttālrunis",
     "e.g. Parka iela 12": "piem. Parka iela 12",
@@ -180,5 +180,12 @@
     "You have not submitted any adoption applications yet.":"Jums vēl nav iesniegtu adopcijas pieteikumu.",
     "No database records found.": "Nav atrasti datubāzes ieraksti.",
     "Healthy": "Vesels",
-    "Healthy & Vaccinated": "Vesels & Vakcinēts"
+    "Healthy & Vaccinated": "Vesels & Vakcinēts",
+    "Card":"Maksājumu karte",
+    "Unknown":"Nezināms",
+    "Shelter":"patversme",
+    "Cat":"Kaķis",
+    "Dog":"Suns",
+    "Under Observation":"Tiek novērots",
+    "Animal ID":"Dzīvnieka ID"
 }

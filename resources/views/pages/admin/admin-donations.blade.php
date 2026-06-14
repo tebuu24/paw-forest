@@ -98,7 +98,7 @@ use function Livewire\Volt\{state};
                                 <tr>
                                     <td>#D{{ $donation->id }}</td>
                                     <td>
-                                        #U{{ $donation->users_id }} 
+                                        #U{{ $donation->user_id }} 
                                         <small style="color: #8a7a74; display: block;">
                                             {{ $donation->user->name ?? '' }}
                                         </small>

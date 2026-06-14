@@ -59,8 +59,8 @@ use function Livewire\Volt\{state};
                 <table>
                     <thead>
                         <tr>
-                            <th>{{ __('Location ID') }}</th>
-                            <th>{{ __('City Name') }}</th>
+                            <th>{{ __('ID') }}</th>
+                            <th>{{ __('Shelter Name') }}</th>
                             <th>{{ __('Address') }}</th>
                             <th>{{ __('Actions') }}</th>
                         </tr>
