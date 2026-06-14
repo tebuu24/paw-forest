@@ -730,3 +730,23 @@ footer{
 .margin-bottom-sm {
     margin-bottom: 12px;
 }
+
+input[type="file"].table-file-upload{
+    width: 105px;
+    color: transparent;
+}
+input[type="file"].table-file-upload::-webkit-file-upload-button{
+    background: #f7f3f0;
+    border: 1px solid #bbaaa2;
+    border-radius: 4px;
+    padding: 6px 10px;
+    color: #5a4b41;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+}
+input[type="file"].table-file-upload::-webkit-file-upload-button:hover{
+    background: #e2dcd8;
+    border-color: #a49187;
+}

@@ -59,7 +59,7 @@ use function Livewire\Volt\{state};
                     <thead>
                         <tr>
                             <th>{{ __('ID') }}</th>
-                            <th>{{ __('Name') }}</th>
+                            <th>{{ __('Image') }}</th> <th>{{ __('Name') }}</th>
                             <th>{{ __('Species') }}</th>
                             <th>{{ __('Breed') }}</th>
                             <th>{{ __('Gender') }}</th>
@@ -72,6 +72,7 @@ use function Livewire\Volt\{state};
                     <tbody>
                         <tr class="inline-add-row">
                             <td><span class="auto-id">{{ __('Auto') }}</span></td>
+                            <td><input type="file" accept="image/*" class="table-file-upload"></td>
                             <td><input type="text" placeholder="{{ __('e.g. Buddy') }}" required></td>
                             <td><input type="text" placeholder="{{ __('e.g. Dog') }}" required></td>
                             <td><input type="text" placeholder="{{ __('e.g. Golden') }}" required></td>
@@ -97,6 +98,11 @@ use function Livewire\Volt\{state};
                             @foreach($animals as $animal)
                                 <tr>
                                     <td>#{{ sprintf('%03d', $animal->id) }}</td>
+                                    <td>
+                                        <div class="img-placeholder" style="width: 45px; height: 45px; border-radius: 6px; background-color: #e2dcd8; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; border: 1px dashed #bbaaa2;">
+                                            🐾
+                                        </div>
+                                    </td>
                                     <td>{{ $animal->name }}</td>
                                     <td>{{ __($animal->species) }}</td>
                                     <td>{{ __($animal->breed) }}</td>
@@ -119,7 +125,7 @@ use function Livewire\Volt\{state};
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="9" style="text-align: center; color: #8a7a74; font-style: italic; padding: 20px;">
+                                <td colspan="10" style="text-align: center; color: #8a7a74; font-style: italic; padding: 20px;">
                                     {{ __('No database records found.') }}
                                 </td>
                             </tr>
