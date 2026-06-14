@@ -4,33 +4,36 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Animal;
+use App\Models\Location;
 
 class AnimalController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $allAnimals = Animal::with('location')->orderBy('id', 'desc')->get();
-        return view('pages.gallery', compact('allAnimals'));
+        $query = Animal::with('location');
+
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('species')) {
+            $query->where('species', $request->species);
+        }
+
+        if ($request->filled('location_id')) {
+            $query->where('location_id', $request->location_id);
+        }
+
+        $allAnimals = $query->orderBy('id', 'desc')->get();
+        
+        $locations = Location::all();
+
+        return view('pages.gallery', compact('allAnimals', 'locations'));
     }
     public function show($id)
     {
         $animal = Animal::with(['location', 'medicines'])->findOrFail($id);
         return view('pages.animal-profile', compact('animal'));
-    }
-    public function search(Request $request)
-    {
-        $query = Animal::query();
-
-        if ($request->has('species') && $request->species != '') {
-            $query->where('species', $request->species);
-        }
-
-        if ($request->has('name') && $request->name != '') {
-            $query->where('name', 'like', '%' . $request->name . '%');
-        }
-
-        $allAnimals = $query->orderBy('id', 'desc')->get();
-        return view('pages.gallery', compact('allAnimals'));
     }
 
     public function create() { return redirect()->back(); }

@@ -1,6 +1,3 @@
-<?php
-use function Livewire\Volt\{state};
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,8 +42,46 @@ use function Livewire\Volt\{state};
         <br>
         <h1>{{ __('Our Shelter Gallery') }}</h1>
         
+        <form method="GET" action="/gallery" class="block-card filter-section" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 30px; padding: 20px; align-items: flex-end;">
+            
+            <div style="flex: 1 1 200px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">{{ __('Search by Name') }}</label>
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('e.g. Buddy...') }}" style="width: 100%; padding: 10px; border: 1px solid #e2dcd8; border-radius: 6px;">
+            </div>
+
+            <div style="flex: 1 1 150px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">{{ __('Species') }}</label>
+                <select name="species" onchange="this.form.submit()" style="width: 100%; padding: 10px; border: 1px solid #e2dcd8; border-radius: 6px; background-color: white;">
+                    <option value="">{{ __('All Species') }}</option>
+                    <option value="Dog" {{ request('species') == 'Dog' ? 'selected' : '' }}>{{ __('Dog') }}</option>
+                    <option value="Cat" {{ request('species') == 'Cat' ? 'selected' : '' }}>{{ __('Cat') }}</option>
+                </select>
+            </div>
+
+            <div style="flex: 1 1 150px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">{{ __('Shelter Location') }}</label>
+                <select name="location_id" onchange="this.form.submit()" style="width: 100%; padding: 10px; border: 1px solid #e2dcd8; border-radius: 6px; background-color: white;">
+                    <option value="">{{ __('All Locations') }}</option>
+                    @foreach($locations as $loc)
+                        <option value="{{ $loc->id }}" {{ request('location_id') == $loc->id ? 'selected' : '' }}>
+                            {{ trim(str_ireplace('Shelter', '', $loc->name)) }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-blue" style="padding: 10px 20px; height: 40px; border-radius: 6px; border: none; cursor: pointer; font-weight: bold;">
+                    {{ __('Search') }}
+                </button>
+                <a href="/gallery" class="btn" style="padding: 10px 15px; height: 40px; display: inline-block; line-height: 20px; text-decoration: none; color: #6a5a54; background: #e2dcd8; margin-left: 5px; border-radius: 6px; font-weight: bold;">
+                    ✕
+                </a>
+            </div>
+        </form>
+
         <section class="gallery-grid" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; width: 100%;">
-        @if(isset($allAnimals) && $allAnimals->count() > 0)
+        @if($allAnimals->count() > 0)
             @foreach($allAnimals as $animal)
                 <div class="animal-card block-card" style="flex: 1 1 250px; max-width: 300px; margin: 0;">
                     @if($animal->image)
@@ -67,7 +102,7 @@ use function Livewire\Volt\{state};
             @endforeach
         @else
             <div class="block-card" style="text-align: center; color: #8a7a74; font-style: italic; padding: 40px; width: 100%;">
-                {{ __('No database records found.') }}
+                {{ __('No animals match your search criteria.') }}
             </div>
         @endif
         </section>

@@ -8,8 +8,8 @@ use App\Http\Controllers\AnimalController;
 
 Route::get('/', [AnimalController::class, 'home'])->name('home');
 
+
 Route::get('/gallery', [AnimalController::class, 'index'])->name('gallery.index');
-Route::get('/gallery/search', [AnimalController::class, 'search'])->name('gallery.search');
 Route::get('/gallery/{id}', [AnimalController::class, 'show'])->name('gallery.show');
 
 Route::view('/donations', 'pages.donations');

@@ -219,5 +219,10 @@
     "{0} 0 years|{1} :count year|[2,*] :count years": "{0} 0 gadi|{1} :count gads|[2,*] :count gadi",
     "No specific notes or descriptions provided.": "Nav sniegtu specifisku piezīmju vai aprakstu.",
     "Active Medication & Treatment": "Aktīvie medikamenti un ārstēšana",
-    "No active treatments or medical records found.": "Nav atrasta aktīva ārstēšana vai medicīnisko ierakstu."
+    "No active treatments or medical records found.": "Nav atrasta aktīva ārstēšana vai medicīnisko ierakstu.",
+    "Search by Name": "Meklēt pēc vārda",
+    "e.g. Buddy...": "piem. Rembo...",
+    "All Species": "Visas sugas",
+    "All Locations": "Visas lokācijas",
+    "No animals match your search criteria.": "Neviens dzīvnieks neatbilst meklēšanas kritērijiem."
 }
