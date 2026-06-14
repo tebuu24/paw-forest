@@ -30,13 +30,28 @@ use function Livewire\Volt\{state};
     </header>
     <main class="container auth-container">
         <div class="block-card auth-card">
+            @if ($errors->any())
+                <div class="alert alert-danger" style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 12px 15px; margin-bottom: 20px; border-radius: 4px; font-size: 0.9rem;">
+                    <ul style="margin: 0; padding-left: 20px;">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ __($error) }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            @if (session('status'))
+                <div class="alert alert-success" style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 12px 15px; margin-bottom: 20px; border-radius: 4px; font-size: 0.9rem;">
+                    {{ __(session('status')) }}
+                </div>
+            @endif
             <h1>{{ __('Log in') }}</h1>
             <br>
             <form method="POST" action="/login">
                 @csrf
                 <div class="form-group">
                     <label>{{ __('Email') }}</label>
-                    <input name="email" type="text" required>
+                    <input name="email" type="text" value="{{ old('email') }}" required>
                 </div>
                 <div class="form-group">
                     <label>{{ __('Password') }}</label>

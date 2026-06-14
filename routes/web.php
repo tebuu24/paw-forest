@@ -42,3 +42,12 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('pages.dashboard');
 })->name('dashboard');
+
+use App\Http\Controllers\UserController;
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [UserController::class, 'show'])->name('profile.show');
+    Route::put('/profile/update', [UserController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [UserController::class, 'updatePassword'])->name('profile.password');
+    Route::delete('/profile/delete', [UserController::class, 'destroy'])->name('profile.delete');
+});

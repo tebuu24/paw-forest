@@ -13,12 +13,10 @@ use Laravel\Fortify\PasskeyAuthenticatable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
 class User extends Authenticatable implements PasskeyUser
 {
     use SoftDeletes;
     use HasFactory, Notifiable, PasskeyAuthenticatable, TwoFactorAuthenticatable;
-
     protected $table = 'user';
 
     public $timestamps = false;
@@ -28,10 +26,7 @@ class User extends Authenticatable implements PasskeyUser
         'username',
         'email',
         'password',
-        'role',
         'address',
-        'is_blocked',
-        'date_joined',
     ];
 
     protected $hidden = [
@@ -85,12 +80,18 @@ class User extends Authenticatable implements PasskeyUser
             if ($user->is_blocked === null) {
                 $user->is_blocked = false;
             }
+            
+            if (!$user->role) {
+                $user->role = 'user';
+            }
         });
     }
+
     public function adoptionRequests()
     {
         return $this->hasMany(\App\Models\Adoption::class, 'user_id');
     }
+
     public function shelterVisits()
     {
         return $this->hasMany(\App\Models\Visit::class, 'user_id');
