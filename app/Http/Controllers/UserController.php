@@ -86,7 +86,7 @@ class UserController extends Controller
         return view('admin.dashboard', compact('user', 'donations', 'applications'));
     }
 
-    // --- Admin panelim: Darbinieka/Admina iespēja labot citus lietotājus ---
+    // Admin panelim: Darbinieka/Admina iespēja labot citus lietotājus
     public function adminUpdate(Request $request, $id)
     {
         $user = User::withTrashed()->findOrFail($id);

@@ -64,7 +64,7 @@
                             </div>
 
                             <div style="display: flex; gap: 10px;">
-                                <button type="submit" class="btn btn-green">💾 {{ __('Save Changes') }}</button>
+                                <button type="submit" class="btn btn-green">{{ __('Save Changes') }}</button>
                                 <a href="/admin/locations" class="btn" style="background:#e2dcd8; color:#333; padding: 10px 16px; text-decoration:none; border-radius:4px; font-size: 0.9rem;">{{ __('Cancel') }}</a>
                             </div>
                         </form>
@@ -81,7 +81,7 @@
                                         @csrf 
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-red" style="padding: 10px 16px; font-size: 0.85rem; font-weight: 500;">
-                                            📁 {{ __('Archive') }}
+                                            {{ __('Archive') }}
                                         </button>
                                     </form>
                                 </div>
@@ -89,7 +89,7 @@
                         </div>
                     @else
                         <div class="alert alert-danger" style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 4px;">
-                            🔒 {{ __('Access Denied. Only system administrators can update or modify physical shelter locations.') }}
+                            {{ __('Access Denied. Only system administrators can update or modify physical shelter locations.') }}
                         </div>
                     @endif
                 </div>

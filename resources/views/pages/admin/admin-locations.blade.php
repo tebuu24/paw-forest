@@ -97,9 +97,9 @@ use function Livewire\Volt\{state};
                                 <td>{{ $location->address }}</td>
                                 <td>
                                     @if($location->trashed())
-                                        <span style="color: #dc3545; font-weight: bold;">📁 {{ __('Archived') }}</span>
+                                        <span style="color: #dc3545; font-weight: bold;">{{ __('Archived') }}</span>
                                     @else
-                                        <span style="color: #28a745; font-weight: bold;">● {{ __('Active') }}</span>
+                                        <span style="color: #28a745; font-weight: bold;">{{ __('Active') }}</span>
                                     @endif
                                 </td>
                                 <td class="table-actions">

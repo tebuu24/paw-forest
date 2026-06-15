@@ -110,14 +110,14 @@
                                             @csrf 
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-red" style="padding: 10px 16px; font-size: 0.85rem; font-weight: 500;">
-                                                📁 {{ __('Archive') }}
+                                                {{ __('Archive') }}
                                             </button>
                                         </form>
                                     @else
                                         <form action="/admin/medicine/{{ $med->id }}/restore" method="POST" style="margin:0;">
                                             @csrf 
                                             <button type="submit" class="btn btn-green" style="padding: 10px 16px; font-size: 0.85rem; font-weight: 500; background-color: #16a34a;">
-                                                🔄 {{ __('Restore Medication Record') }}
+                                                {{ __('Restore Medication Record') }}
                                             </button>
                                         </form>
 
@@ -126,7 +126,7 @@
                                                 @csrf 
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-red" style="padding: 10px 16px; font-size: 0.85rem; font-weight: 500; background-color: #dc2626;">
-                                                    💥 {{ __('Force Delete Permanently') }}
+                                                    {{ __('Force Delete Permanently') }}
                                                 </button>
                                             </form>
                                         @endif

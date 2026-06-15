@@ -57,9 +57,8 @@ class VisitController extends Controller
         return redirect()->back()->with('status', __('Visit has been rejected.'));
     }
 
-    /**
-     * Soft delete / Archive a visit record.
-     */
+    //Soft delete / Archive a visit record.
+
     public function destroy($id)
     {
         $visit = Visit::findOrFail($id);
@@ -68,9 +67,7 @@ class VisitController extends Controller
         return redirect()->back()->with('status', __('Visit record deleted successfully.'));
     }
 
-    /**
-     * Restore an archived visit record.
-     */
+    //Restore an archived visit record.
     public function restore($id)
     {
         $visit = Visit::withTrashed()->findOrFail($id);
@@ -79,9 +76,7 @@ class VisitController extends Controller
         return redirect()->back()->with('status', __('Visit restored to active view.'));
     }
 
-    /**
-     * Permanently delete a visit record (Admin Only).
-     */
+    //Permanently delete a visit record (Admin Only).
     public function forceDelete($id)
     {
         $visit = Visit::withTrashed()->findOrFail($id);

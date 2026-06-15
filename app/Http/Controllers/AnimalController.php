@@ -164,4 +164,9 @@ class AnimalController extends Controller
 
         return view('pages.index', compact('recentAnimals'));
     }
+    public function show($id)
+    {
+        $animal = Animal::with(['location', 'medicines'])->findOrFail($id);
+        return view('pages.animal-profile', compact('animal'));
+    }
 }

@@ -34,7 +34,6 @@ class AdoptionController extends Controller
 
     public function restore($id)
     {
-        // We use withTrashed() to find records that have a deleted_at timestamp
         $adoption = Adoption::withTrashed()->findOrFail($id);
         $adoption->restore();
 

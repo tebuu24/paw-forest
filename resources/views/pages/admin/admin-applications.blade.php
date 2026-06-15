@@ -126,7 +126,6 @@ use function Livewire\Volt\{state};
                                                 </button>
                                             @endif
                                         @else
-                                            {{-- If Pending: Show Decision Actions Only --}}
                                             @if(strtolower($adoption->status) === 'pending')
                                                 <form id="approve-form-{{ $adoption->id }}" action="/admin/applications/{{ $adoption->id }}/approve" method="POST" style="display: none;">
                                                     @csrf
@@ -141,7 +140,6 @@ use function Livewire\Volt\{state};
                                                 <button type="submit" form="reject-form-{{ $adoption->id }}" class="btn-table-action btn-red">{{ __('Reject') }}</button>
                                             @endif
 
-                                            {{-- If Approved or Rejected: Only then show the Delete button --}}
                                             @if(in_array(strtolower($adoption->status), ['approved', 'rejected']))
                                                 @if(in_array(auth()->user()->role, ['admin', 'employee']))
                                                     <form id="archive-adopt-{{ $adoption->id }}" action="/admin/applications/{{ $adoption->id }}" method="POST" style="display: none;">
@@ -230,7 +228,7 @@ use function Livewire\Volt\{state};
                                                     @csrf
                                                 </form>
                                                 <button type="submit" form="restore-visit-{{ $visit->id }}" class="btn-table-action btn-green" style="margin-bottom: 2px;">
-                                                    🔄 {{ __('Restore') }}
+                                                    {{ __('Restore') }}
                                                 </button>
                                             @endif
 
@@ -240,11 +238,10 @@ use function Livewire\Volt\{state};
                                                     @method('DELETE')
                                                 </form>
                                                 <button type="submit" form="force-delete-visit-{{ $visit->id }}" class="btn-table-action btn-red" onclick="return confirm('Are you sure you want to permanently delete this visit record?')">
-                                                    💥 {{ __('Force Delete') }}
+                                                    {{ __('Force Delete') }}
                                                 </button>
                                             @endif
                                         @else
-                                            {{-- If Pending: Show Decision Actions Only --}}
                                             @if(strtolower($visit->status ?? 'pending') === 'pending')
                                                 <form id="visit-approve-{{ $visit->id }}" action="/admin/visits/{{ $visit->id }}/approve" method="POST" style="display: none;">
                                                     @csrf
@@ -258,8 +255,6 @@ use function Livewire\Volt\{state};
                                                 </form>
                                                 <button type="submit" form="visit-reject-{{ $visit->id }}" class="btn-table-action btn-red">{{ __('Reject') }}</button>
                                             @endif
-
-                                            {{-- If Approved or Rejected: Only then show the Delete button --}}
                                             @if(in_array(strtolower($visit->status ?? ''), ['approved', 'rejected']))
                                                 @if(in_array(auth()->user()->role, ['admin', 'employee']))
                                                     <form id="archive-visit-{{ $visit->id }}" action="/admin/visits/{{ $visit->id }}" method="POST" style="display: none;">

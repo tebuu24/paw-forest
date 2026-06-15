@@ -142,7 +142,7 @@ use function Livewire\Volt\{state};
                                     </td>
                                     @if ($errors->any())
                                         <div class="alert alert-danger" style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 12px 15px; margin-bottom: 20px; border-radius: 4px;">
-                                            <h5 style="margin: 0 0 5px 0; font-weight: bold;">⚠️ {{ __('Please correct the following errors:') }}</h5>
+                                            <h5 style="margin: 0 0 5px 0; font-weight: bold;">{{ __('Please correct the following errors:') }}</h5>
                                             <ul style="margin: 0; padding-left: 20px; font-size: 0.9rem;">
                                                 @foreach ($errors->all() as $error)
                                                     <li>{{ $error }}</li>

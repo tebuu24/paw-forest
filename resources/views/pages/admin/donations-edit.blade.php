@@ -102,7 +102,7 @@
                                         <form action="/admin/donations/{{ $donation->id }}/restore" method="POST" style="margin:0;">
                                             @csrf
                                             <button type="submit" class="btn btn-blue" style="padding: 10px 16px; font-size: 0.85rem;">
-                                                ♻️ {{ __('Restore Entry') }}
+                                                {{ __('Restore Entry') }}
                                             </button>
                                         </form>
                                     @else
@@ -110,7 +110,7 @@
                                             @csrf 
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-red" style="padding: 10px 16px; font-size: 0.85rem; font-weight: 500;">
-                                                📁 {{ __('Archive') }}
+                                                {{ __('Archive') }}
                                             </button>
                                         </form>
                                     @endif
@@ -119,7 +119,7 @@
                         </div>
                     @else
                         <div class="alert alert-danger" style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 4px;">
-                            🔒 {{ __('Access Denied. Only system administrators can update or modify monetary ledger entries.') }}
+                            {{ __('Access Denied. Only system administrators can update or modify monetary ledger entries.') }}
                         </div>
                     @endif
                 </div>

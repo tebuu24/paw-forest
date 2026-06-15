@@ -62,9 +62,9 @@ class DonationController extends Controller
 
         $donation = Donation::with('user')->findOrFail($id);
         return view('pages.admin.admin-donation-show', compact('donation'));
+    }
     public function edit($id)
     {
-        // Use withTrashed() so admins can still edit or view archived records if needed
         $donation = Donation::withTrashed()->with('user')->findOrFail($id);
         return view('pages.admin.donations-edit', compact('donation'));
     }
@@ -84,7 +84,7 @@ class DonationController extends Controller
 
     public function destroy($id)
     {
-        // This will now soft delete the record automatically if the trait is on the model
+        // soft delete the record automatically if the trait is on the model
         $donation = Donation::findOrFail($id);
         $donation->delete(); 
         

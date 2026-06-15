@@ -98,7 +98,7 @@
                             </div>
 
                             <div style="display: flex; gap: 10px;">
-                                <button type="submit" class="btn btn-green">💾 {{ __('Save Changes') }}</button>
+                                <button type="submit" class="btn btn-green">{{ __('Save Changes') }}</button>
                                 <a href="/admin/animals" class="btn" style="background:#e2dcd8; color:#333; padding: 10px 16px; text-decoration:none; border-radius:4px; font-size: 0.9rem;">{{ __('Cancel') }}</a>
                             </div>
                         </form>
@@ -115,7 +115,7 @@
                                         <form action="/admin/animals/{{ $animal->id }}/restore" method="POST" style="margin:0;">
                                             @csrf
                                             <button type="submit" class="btn btn-blue" style="padding: 10px 16px; font-size: 0.85rem;">
-                                                ♻️ {{ __('Restore Entry') }}
+                                                {{ __('Restore Entry') }}
                                             </button>
                                         </form>
                                     @else
@@ -123,7 +123,7 @@
                                             @csrf 
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-red" style="padding: 10px 16px; font-size: 0.85rem; font-weight: 500;">
-                                                📁 {{ __('Archive') }}
+                                                {{ __('Archive') }}
                                             </button>
                                         </form>
                                     @endif
@@ -132,7 +132,7 @@
                         </div>
                     @else
                         <div class="alert alert-danger" style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 4px;">
-                            🔒 {{ __('Access Denied. You do not have permission to edit records.') }}
+                            {{ __('Access Denied. You do not have permission to edit records.') }}
                         </div>
                     @endif
                 </div>
