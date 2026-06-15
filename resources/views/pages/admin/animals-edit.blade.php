@@ -40,9 +40,15 @@
                             @csrf
                             @method('PUT')
 
-                            <div class="form-group-spacing">
-                                <label class="form-label-bold-block">{{ __('Name') }}</label>
-                                <input type="text" name="name" value="{{ old('name', $animal->name) }}" required class="form-control-field form-control-white-bg">
+                            <div class="form-flex-row-container">
+                                <div class="flex-field-fill-proportionate">
+                                    <label class="form-label-bold-block">{{ __('Name') }}</label>
+                                    <input type="text" name="name" value="{{ old('name', $animal->name) }}" required class="form-control-field form-control-white-bg">
+                                </div>
+                                <div class="flex-field-fill-proportionate">
+                                    <label class="form-label-bold-block">{{ __('Age') }}</label>
+                                    <input type="number" name="age" value="{{ old('age', $animal->age) }}" min="0" class="form-control-field form-control-white-bg" placeholder="{{ __('e.g. 2') }}">
+                                </div>
                             </div>
 
                             <div class="form-flex-row-container">

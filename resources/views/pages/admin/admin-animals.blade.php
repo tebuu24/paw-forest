@@ -75,6 +75,7 @@ use function Livewire\Volt\{state};
                             <th>{{ __('Name') }}</th>
                             <th>{{ __('Species') }}</th>
                             <th>{{ __('Breed') }}</th>
+                            <th>{{ __('Age') }}</th>
                             <th>{{ __('Gender') }}</th>
                             <th>{{ __('Health Status') }}</th>
                             <th>{{ __('Shelter Location') }}</th>
@@ -90,6 +91,7 @@ use function Livewire\Volt\{state};
                                 <td><input type="text" form="create-animal-form" name="name" placeholder="{{ __('e.g. Buddy') }}" required class="full-width-input white-bg"></td>
                                 <td><input type="text" form="create-animal-form" name="species" placeholder="{{ __('e.g. Dog') }}" required class="full-width-input white-bg"></td>
                                 <td><input type="text" form="create-animal-form" name="breed" placeholder="{{ __('e.g. Golden') }}" required class="full-width-input white-bg"></td>
+                                <td><input type="number" form="create-animal-form" name="age" placeholder="{{ __('e.g. 2') }}" min="0" class="full-width-input white-bg"></td>
                                 <td>
                                     <select form="create-animal-form" name="gender" class="full-width-input white-bg">
                                         <option value="Male">{{ __('Male') }}</option>
@@ -134,6 +136,7 @@ use function Livewire\Volt\{state};
                                     </td>
                                     <td>{{ __($animal->species) }}</td>
                                     <td>{{ __($animal->breed) }}</td>
+                                    <td>{{ $animal->age !== null ? $animal->age . ' ' . trans_choice('year|years', $animal->age) : '-' }}</td>
                                     <td>{{ __($animal->gender) }}</td>
                                     <td>{{ __($animal->health_status) }}</td>
                                     <td>{{ $animal->location->name ?? __('Unknown Location') }}</td>
@@ -182,7 +185,7 @@ use function Livewire\Volt\{state};
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="10" class="no-records-cell">
+                                <td colspan="11" class="no-records-cell">
                                     {{ __('No database records found.') }}
                                 </td>
                             </tr>
