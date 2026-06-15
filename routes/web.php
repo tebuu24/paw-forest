@@ -75,8 +75,12 @@ Route::middleware(['auth'])->group(function () {
         // Locations (Read view accessible to employee)
         Route::view('/admin/locations', 'pages.admin.admin-locations');
 
-        // Employees can read the users page
+        // Employees can manage basic user status
         Route::get('/admin/users', [AdminController::class, 'index'])->name('admin.users.index');
+        Route::post('/admin/users/{id}/block', [AdminController::class, 'block']);
+        Route::delete('/admin/users/{id}', [UserController::class, 'destroy']);
+        Route::post('/admin/users/{id}/restore', [UserController::class, 'restore']);
+        Route::put('/admin/users/{id}', [UserController::class, 'adminUpdate']);
     });
 
     // Admin-Only Exclusive Routes
@@ -113,11 +117,7 @@ Route::middleware(['auth'])->group(function () {
             return redirect()->back()->with('status', __('Location restored successfully!'));
         });
 
-        // Administrative User Modifications
-        Route::post('/admin/users/{id}/block', [AdminController::class, 'block']);
-        Route::put('/admin/users/{id}', [UserController::class, 'adminUpdate']);
-        Route::delete('/admin/users/{id}', [UserController::class, 'destroy']);
-        Route::post('/admin/users/{id}/restore', [UserController::class, 'restore']);
+        // Only Admin can permanently wipe a user
         Route::delete('/admin/users/{id}/force-delete', [UserController::class, 'forceDelete']);
 
         // Administrative Donations System 

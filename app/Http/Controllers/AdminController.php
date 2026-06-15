@@ -10,17 +10,19 @@ use App\Models\Donation;
 
 class AdminController extends Controller
 {
-    // Lietotāju saraksta attēlošana (Pieejams Admin & Employee)
     public function index()
     {
         $users = User::withTrashed()->orderBy('id', 'desc')->get();
         return view('pages.admin.admin-users', compact('users'));
     }
 
-    // Lietotāja bloķēšana vai atbloķēšana (Gan Admin, gan Employee var bloķēt)
     public function block($id)
     {
         $user = User::withTrashed()->findOrFail($id);
+
+        if (auth()->user()->role === 'employee' && in_array($user->role, ['admin', 'employee'])) {
+            abort(403, 'Unauthorized action.');
+        }
 
         $user->is_blocked = !$user->is_blocked;
         $user->save();

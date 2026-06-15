@@ -14,10 +14,9 @@ class UserController extends Controller
     public function index()
     {
         $users = User::withTrashed()->orderBy('date_joined', 'desc')->get();
-        
         return view('pages.admin.admin-users', compact('users'));
     }
-    // Pašreizējā autorizētā lietotāja personīgais profils (front-end)
+
     public function show()
     {
         $user = Auth::user();
@@ -25,7 +24,6 @@ class UserController extends Controller
         return view('pages.profile', compact('user'));
     }
 
-    // Paša lietotāja profila datu labošana
     public function update(Request $request)
     {
         $user = Auth::user();
@@ -36,6 +34,7 @@ class UserController extends Controller
             'email'   => ['required', 'string', 'email', 'max:255'],
             'username'=> ['required', 'string', 'max:255'],
         ]);
+
         $emailExists = \App\Models\User::where('email', $request->email)
             ->where('id', '!=', $user->id)
             ->exists();
@@ -43,6 +42,7 @@ class UserController extends Controller
         if ($emailExists) {
             return redirect()->back()->withErrors(['email' => __('The email has already been taken.')])->withInput();
         }
+
         $usernameExists = \App\Models\User::where('username', $request->username)
             ->where('id', '!=', $user->id)
             ->exists();
@@ -50,6 +50,7 @@ class UserController extends Controller
         if ($usernameExists) {
             return redirect()->back()->withErrors(['username' => __('The username has already been taken.')])->withInput();
         }
+
         $user->name = $request->name;
         $user->username = $request->username;
         $user->email = $request->email;
@@ -73,16 +74,19 @@ class UserController extends Controller
         return redirect()->back()->with('success', __('Password changed successfully!'));
     }
 
-  public function destroy(Request $request, $id = null)
+    public function destroy(Request $request, $id = null)
     {
         if ($id) {
-            // Darbinieks/Admins deaktivizē lietotāju
             $user = User::findOrFail($id);
+            
+            if (auth()->user()->role === 'employee' && in_array($user->role, ['admin', 'employee'])) {
+                abort(403, 'Unauthorized action.');
+            }
+
             $user->delete();
             return redirect()->back()->with('success', __('User account soft-deleted. Pending admin full deletion.'));
         }
 
-        // Lietotājs pats dzēš savu kontu
         $request->validate(['delete_password' => ['required', 'current_password']]);
         $user = Auth::user();
         Auth::logout();
@@ -103,7 +107,6 @@ class UserController extends Controller
         return view('admin.dashboard', compact('user', 'donations', 'applications'));
     }
 
-    // Admin panelim: Darbinieka/Admina iespēja labot citus lietotājus
     public function adminUpdate(Request $request, $id)
     {
         $user = User::withTrashed()->findOrFail($id);
@@ -117,20 +120,23 @@ class UserController extends Controller
         return redirect()->back()->with('success', __('User profile updated.'));
     }
 
-    // Atjaunot lietotāju (Tikai Adminam)
     public function restore($id)
     {
-        if (auth()->user()->role !== 'admin') {
+        if (!in_array(auth()->user()->role, ['admin', 'employee'])) {
             abort(403, 'Unauthorized action.');
         }
 
         $user = User::withTrashed()->findOrFail($id);
+        
+        if (auth()->user()->role === 'employee' && in_array($user->role, ['admin', 'employee'])) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $user->restore();
 
         return redirect()->back()->with('success', __('User account successfully reactivated.'));
     }
 
-    // Pilnīga izdzēšana no DB (Tikai Adminam)
     public function forceDelete($id)
     {
         if (auth()->user()->role !== 'admin') {
