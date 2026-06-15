@@ -85,33 +85,30 @@
                     </thead>
                     <tbody>
                         @if(in_array(auth()->user()->role, ['admin', 'employee']))
-                            <tr class="inline-add-row" id="inline-add">
-                                <td colspan="10" class="zero-padding-cell">
-                                    <form action="/admin/medicine" method="POST" class="table-row-form">
-                                        @csrf
-                                        <div class="table-form-cell"><span class="auto-id">{{ __('Auto') }}</span></div>
-                                        <div class="table-form-cell">
-                                            <select name="animal_id" class="table-select-field" required>
-                                                @foreach($animals as $an)
-                                                    <option value="{{ $an->id }}">#{{ $an->id }} {{ $an->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="table-form-cell"><input type="text" name="name" placeholder="{{ __('Name') }}" class="table-input-field" required></div>
-                                        <div class="table-form-cell"><input type="text" name="description" placeholder="{{ __('Description') }}" class="table-input-field" required></div>
-                                        <div class="table-form-cell"><input type="text" name="method_of_use" placeholder="{{ __('e.g. Orally') }}" class="table-input-field" required></div>
-                                        <div class="table-form-cell"><input type="text" name="frequency" placeholder="{{ __('e.g. 1x day') }}" class="table-input-field" required></div>
-                                        <div class="table-form-cell"><input type="date" name="date_from" class="table-input-field" required></div>
-                                        <div class="table-form-cell"><input type="date" name="date_until" class="table-input-field" required></div>
-                                        <div class="table-form-cell">
-                                            <span class="user-meta-tag">#E{{ auth()->user()->id }} (You)</span>
-                                        </div>
-                                        <div class="table-form-cell">
-                                            <button type="submit" class="btn btn-green table-inline-btn action-btn-rounded">{{ __('Save') }}</button>
-                                        </div>
-                                    </form>
-                                </td>
-                            </tr>
+                            <form action="/admin/medicine" method="POST">
+                                @csrf
+                                <tr class="inline-add-row" id="inline-add">
+                                    <td>
+                                        <span class="auto-id">{{ __('Auto') }}</span>
+                                    </td>
+                                    
+                                    <td>
+                                        <select name="animal_id" class="table-select-field" style="width: 100%;" required>
+                                            @foreach($animals as $an)
+                                                <option value="{{ $an->id }}">#{{ $an->id }} {{ $an->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td><input type="text" name="name" placeholder="{{ __('Name') }}" class="table-input-field" style="width: 100%;" required></td>
+                                    <td><input type="text" name="description" placeholder="{{ __('Description') }}" class="table-input-field" style="width: 100%;" required></td>
+                                    <td><input type="text" name="method_of_use" placeholder="{{ __('e.g. Orally') }}" class="table-input-field" style="width: 100%;" required></td>
+                                    <td><input type="text" name="frequency" placeholder="{{ __('e.g. 1x day') }}" class="table-input-field" style="width: 100%;" required></td>
+                                    <td><input type="date" name="date_from" class="table-input-field" style="width: 100%;" required></td>
+                                    <td><input type="date" name="date_until" class="table-input-field" style="width: 100%;" required></td>
+                                    <td><span class="user-meta-tag">#E{{ auth()->user()->id }} (You)</span></td>
+                                    <td><button type="submit" class="btn btn-green table-inline-btn action-btn-rounded">{{ __('Save') }}</button></td>
+                                </tr>
+                            </form>
                         @endif
 
                         @if($medicines->count() > 0)

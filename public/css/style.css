@@ -1328,3 +1328,23 @@ td.action-buttons-cell {
     white-space: nowrap;
     max-width: 100%;
 }
+
+.alert {
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.alert-success {
+    background-color: #e6f6ec;
+    color: #1e7e34;
+    border-left: 5px solid #28a745;
+}
+
+.alert-danger {
+    background-color: #fde8e8;
+    color: #c81e1e;
+    border-left: 5px solid #f05252;
+}
