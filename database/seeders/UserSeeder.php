@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
@@ -36,8 +37,11 @@ class UserSeeder extends Seeder
         User::create(['id' => 26, 'name' => 'Ralfs Eilands', 'username' => 'ralfs_e', 'email' => 'ralfs@example.com', 'password' => $password, 'role' => 'user', 'address' => 'Cēsis', 'date_joined' => now()]);
         User::create(['id' => 27, 'name' => 'Aminata Savadogo', 'username' => 'aminata_s', 'email' => 'aminata@example.com', 'password' => $password, 'role' => 'user', 'address' => 'Smiltene', 'date_joined' => now()]);
 
-        // Admin, Employee tests
-        User::create(['id' => 28, 'name' => 'Admin User', 'username' => 'admin_user', 'email' => 'admin@pawforest.com', 'password' => $password, 'role' => 'admin', 'address' => 'Rīga', 'date_joined' => now()]);
-        User::create(['id' => 29, 'name' => 'Employee User', 'username' => 'employee_user', 'email' => 'employee@pawforest.com', 'password' => $password, 'role' => 'employee', 'address' => 'Rīga', 'date_joined' => now()]);
+        // --- Custom Master Admins & Staff  ---
+        User::create(['id' => 28, 'name' => 'Admin User', 'username' => 'admin', 'email' => 'admin@pawforest.com', 'password' => $password, 'role' => 'admin', 'address' => 'Riga, Latvija', 'date_joined' => now()]);
+        DB::table('employees')->insert(['user_id' => 28, 'location_id' => 1, 'phone_number' => '+371 20000010', 'job_title' => 'System Administrator']);
+
+        User::create(['id' => 29, 'name' => 'Employee User', 'username' => 'employee', 'email' => 'employee@pawforest.com', 'password' => $password, 'role' => 'employee', 'address' => 'Riga, Latvija', 'date_joined' => now()]);
+        DB::table('employees')->insert(['user_id' => 29, 'location_id' => 1, 'phone_number' => '+371 20000011', 'job_title' => 'Animal Care Specialist']);
     }
 }

@@ -21,13 +21,9 @@ use function Livewire\Volt\{state};
                     @if(auth()->user()->role === 'admin')
                         <li><a href="/admin/donations">{{ __('Donations') }}</a></li>
                     @endif
-                    
                     <li><a href="/admin/medicine">{{ __('Medications') }}</a></li>
-                    
-                    @if(auth()->user()->role === 'admin')
-                        <li><a href="/admin/locations">{{ __('Locations') }}</a></li>
-                        <li><a href="/admin/users">{{ __('Users') }}</a></li>
-                    @endif
+                    <li><a href="/admin/locations">{{ __('Locations') }}</a></li>
+                    <li><a href="/admin/users">{{ __('Users') }}</a></li>
                 </ul>
             </div>
             
@@ -49,15 +45,23 @@ use function Livewire\Volt\{state};
                 </form>
             </div>
         </aside>
+
         <main class="admin-main">
             <h1>{{ __('Adoption Requests') }}</h1>
+            
+            @if(session('status'))
+                <div class="alert alert-success" style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 12px 15px; margin-bottom: 20px; border-radius: 4px;">
+                    {{ session('status') }}
+                </div>
+            @endif
+
             <div class="block-card">
                 <table>
                     <thead>
                         <tr>
                             <th>{{ __('ID') }}</th>
                             <th>{{ __('Date') }}</th>
-                            <th>{{ __('User') }}</th>
+                            <th>{{ __('User / Applicant') }}</th>
                             <th>{{ __('Animal') }}</th>
                             <th>{{ __('Employee Representative') }}</th>
                             <th>{{ __('Comment') }}</th>
@@ -66,36 +70,28 @@ use function Livewire\Volt\{state};
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="inline-add-row">
-                            <td><span class="auto-id">{{ __('Auto') }}</span></td>
-                            <td><input type="date" required></td>
-                            <td><input type="text" placeholder="#U00" required></td>
-                            <td><input type="text" placeholder="#000" required></td>
-                            <td><input type="text" placeholder="#E00" required></td>
-                            <td><input type="text" placeholder="{{ __('Notes...') }}" required></td>
-                            <td>
-                                <select>
-                                    <option value="Pending">{{ __('Pending') }}</option>
-                                    <option value="Approved">{{ __('Approved') }}</option>
-                                    <option value="Rejected">{{ __('Rejected') }}</option>
-                                </select>
-                            </td>
-                            <td>
-                                <button type="submit" class="btn btn-green table-inline-btn">{{ __('Save') }}</button>
-                            </td>
-                        </tr>
-
                         @php
-                            $adoptions = \App\Models\Adoption::all();
+                            $adoptions = \App\Models\Adoption::withTrashed()->with(['user', 'animal', 'employee.user'])->get();
                         @endphp
 
                         @if($adoptions->count() > 0)
                             @foreach($adoptions as $adoption)
-                                <tr>
-                                    <td>#A{{ sprintf('%02d', $adoption->id) }}</td>
+                                <tr style="{{ $adoption->trashed() ? 'background-color: #fcf8e3; opacity: 0.85;' : '' }}">
+                                    <td>
+                                        #A{{ sprintf('%02d', $adoption->id) }}
+                                        @if($adoption->trashed())
+                                            <small style="color: #b94a48; display: block; font-weight: bold;">({{ __('Deleted') }})</small>
+                                        @endif
+                                    </td>
                                     <td>{{ $adoption->date }}</td>
-                                    <td>#U{{ $adoption->user_id }} {{ $adoption->user->name ?? '' }}</td>
-                                    <td>#{{ $adoption->animal_id }} {{ $adoption->animal->name ?? '' }}</td>
+                                    <td>
+                                        <strong>{{ $adoption->user->name ?? __('Unknown User') }}</strong> 
+                                        <span style="color: #8a7a74; font-size: 0.8rem; display: block;">#U{{ $adoption->user_id }}</span>
+                                    </td>
+                                    <td>
+                                        <strong>{{ $adoption->animal->name ?? __('Unknown Animal') }}</strong>
+                                        <span style="color: #8a7a74; font-size: 0.8rem; display: block;">#{{ $adoption->animal_id }}</span>
+                                    </td>
                                     <td>
                                         {{ $adoption->employee->user->name ?? __('Unassigned') }}
                                     </td>
@@ -109,25 +105,62 @@ use function Livewire\Volt\{state};
                                             <span class="stat-purple-num">{{ __('Pending') }}</span>
                                         @endif
                                     </td>
-                                        <td class="action-buttons-cell">
-                                            <form action="/admin/applications/{{ $adoption->id }}/approve" method="POST" style="display: inline-block;">
-                                                @csrf
-                                                @method('PATCH')
-                                                <button type="submit" class="btn-table-action btn-green">{{ __('Approve') }}</button>
-                                            </form>
+                                    <td class="action-buttons-cell">
+                                        @if($adoption->trashed())
+                                            @if(in_array(auth()->user()->role, ['admin', 'employee']))
+                                                <form id="restore-adopt-{{ $adoption->id }}" action="/admin/applications/{{ $adoption->id }}/restore" method="POST" style="display: none;">
+                                                    @csrf
+                                                </form>
+                                                <button type="submit" form="restore-adopt-{{ $adoption->id }}" class="btn-table-action btn-green" style="margin-bottom: 2px;">
+                                                    {{ __('Restore') }}
+                                                </button>
+                                            @endif
 
-                                            <form action="/admin/applications/{{ $adoption->id }}/reject" method="POST" style="display: inline-block;">
-                                                @csrf
-                                                @method('PATCH')
-                                                <button type="submit" class="btn-table-action btn-red">{{ __('Reject') }}</button>
-                                            </form>
-                                        </td>
+                                            @if(auth()->user()->role === 'admin')
+                                                <form id="force-delete-adopt-{{ $adoption->id }}" action="/admin/applications/{{ $adoption->id }}/force-delete" method="POST" style="display: none;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+                                                <button type="submit" form="force-delete-adopt-{{ $adoption->id }}" class="btn-table-action btn-red" onclick="return confirm('Are you sure you want to permanently delete this application?')">
+                                                     {{ __('Force Delete') }}
+                                                </button>
+                                            @endif
+                                        @else
+                                            {{-- If Pending: Show Decision Actions Only --}}
+                                            @if(strtolower($adoption->status) === 'pending')
+                                                <form id="approve-form-{{ $adoption->id }}" action="/admin/applications/{{ $adoption->id }}/approve" method="POST" style="display: none;">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                </form>
+                                                <button type="submit" form="approve-form-{{ $adoption->id }}" class="btn-table-action btn-green">{{ __('Approve') }}</button>
+
+                                                <form id="reject-form-{{ $adoption->id }}" action="/admin/applications/{{ $adoption->id }}/reject" method="POST" style="display: none;">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                </form>
+                                                <button type="submit" form="reject-form-{{ $adoption->id }}" class="btn-table-action btn-red">{{ __('Reject') }}</button>
+                                            @endif
+
+                                            {{-- If Approved or Rejected: Only then show the Delete button --}}
+                                            @if(in_array(strtolower($adoption->status), ['approved', 'rejected']))
+                                                @if(in_array(auth()->user()->role, ['admin', 'employee']))
+                                                    <form id="archive-adopt-{{ $adoption->id }}" action="/admin/applications/{{ $adoption->id }}" method="POST" style="display: none;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    </form>
+                                                    <button type="submit" form="archive-adopt-{{ $adoption->id }}" class="btn-table-action btn-blue" style="margin-top: 2px;" onclick="return confirm('Are you sure you want to delete this application?')">
+                                                        🗑️ {{ __('Delete') }}
+                                                    </button>
+                                                @endif
+                                            @endif
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
                                 <td colspan="8" style="text-align: center; color: #8a7a74; font-style: italic; padding: 20px;">
-                                    {{ __('No database records found.') }}
+                                    {{ __('No adoption requests recorded.') }}
                                 </td>
                             </tr>
                         @endif
@@ -144,63 +177,108 @@ use function Livewire\Volt\{state};
                         <tr>
                             <th>{{ __('ID') }}</th>
                             <th>{{ __('Date') }}</th>
-                            <th>{{ __('User') }}</th>
-                            <th>{{ __('Animal') }}</th>
+                            <th>{{ __('Visitor Name') }}</th>
+                            <th>{{ __('Target Animal') }}</th>
                             <th>{{ __('Shelter Location') }}</th>
-                            <th>{{ __('Employee Representative') }}</th>
-                            <th>{{ __('Comment') }}</th>
+                            <th>{{ __('Employee Host') }}</th>
+                            <th>{{ __('Comment / Purpose') }}</th>
+                            <th>{{ __('Status') }}</th>
                             <th>{{ __('Actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="inline-add-row">
-                            <td><span class="auto-id">{{ __('Auto') }}</span></td>
-                            <td><input type="date" required></td>
-                            <td><input type="text" placeholder="#U00" required></td>
-                            <td><input type="text" placeholder="#000" required></td>
-                            <td><input type="text" placeholder="#L00" required></td>
-                            <td><input type="text" placeholder="#E00" required></td>
-                            <td><input type="text" placeholder="{{ __('Purpose...') }}" required></td>
-                            <td>
-                                <button type="submit" class="btn btn-green table-inline-btn">{{ __('Save') }}</button>
-                            </td>
-                        </tr>
-
                         @php
-                            $visits = \App\Models\Visit::all();
+                            $visits = \App\Models\Visit::withTrashed()->with(['user', 'animal', 'location', 'employee.user'])->get();
                         @endphp
 
                         @if($visits->count() > 0)
                             @foreach($visits as $visit)
-                                <tr>
-                                    <td>#V{{ sprintf('%02d', $visit->id) }}</td>
+                                <tr style="{{ $visit->trashed() ? 'background-color: #fcf8e3; opacity: 0.85;' : '' }}">
+                                    <td>
+                                        #V{{ sprintf('%02d', $visit->id) }}
+                                        @if($visit->trashed())
+                                            <small style="color: #b94a48; display: block; font-weight: bold;">({{ __('Deleted') }})</small>
+                                        @endif
+                                    </td>
                                     <td>{{ $visit->date }}</td>
-                                    <td>#U{{ $visit->user_id }} {{ $visit->user->name ?? '' }}</td>
-                                    <td>#{{ $visit->animal_id }} {{ $visit->animal->name ?? '' }}</td>
-                                    <td>#L{{ $visit->location_id }} {{ $visit->location->name ?? '' }}</td>
+                                    <td>
+                                        <strong>{{ $visit->user->name ?? __('Unknown User') }}</strong>
+                                        <span style="color: #8a7a74; font-size: 0.8rem; display: block;">#U{{ $visit->user_id }}</span>
+                                    </td>
+                                    <td>
+                                        <strong>{{ $visit->animal->name ?? __('Unknown Animal') }}</strong>
+                                        <span style="color: #8a7a74; font-size: 0.8rem; display: block;">#{{ $visit->animal_id }}</span>
+                                    </td>
+                                    <td>{{ $visit->location->name ?? __('Unknown Location') }}</td>
                                     <td>
                                         {{ $visit->employee->user->name ?? __('Unassigned') }}
                                     </td>
                                     <td>{{ $visit->comment ?? '-' }}</td>
-                                        <td class="action-buttons-cell">
-                                            <form action="/admin/applications/{{ $adoption->id }}/approve" method="POST" style="display: inline-block;">
-                                                @csrf
-                                                @method('PATCH')
-                                                <button type="submit" class="btn-table-action btn-green">{{ __('Approve') }}</button>
-                                            </form>
+                                    <td>
+                                        @if(strtolower($visit->status ?? '') === 'approved')
+                                            <span class="stat-green-num">{{ __('Approved') }}</span>
+                                        @elseif(strtolower($visit->status ?? '') === 'rejected')
+                                            <span class="stat-red-num">{{ __('Rejected') }}</span>
+                                        @else
+                                            <span class="stat-purple-num">{{ __('Pending') }}</span>
+                                        @endif
+                                    </td>
+                                    <td class="action-buttons-cell">
+                                        @if($visit->trashed())
+                                            @if(in_array(auth()->user()->role, ['admin', 'employee']))
+                                                <form id="restore-visit-{{ $visit->id }}" action="/admin/visits/{{ $visit->id }}/restore" method="POST" style="display: none;">
+                                                    @csrf
+                                                </form>
+                                                <button type="submit" form="restore-visit-{{ $visit->id }}" class="btn-table-action btn-green" style="margin-bottom: 2px;">
+                                                    🔄 {{ __('Restore') }}
+                                                </button>
+                                            @endif
 
-                                            <form action="/admin/applications/{{ $adoption->id }}/reject" method="POST" style="display: inline-block;">
-                                                @csrf
-                                                @method('PATCH')
-                                                <button type="submit" class="btn-table-action btn-red">{{ __('Reject') }}</button>
-                                            </form>
-                                        </td>
+                                            @if(auth()->user()->role === 'admin')
+                                                <form id="force-delete-visit-{{ $visit->id }}" action="/admin/visits/{{ $visit->id }}/force-delete" method="POST" style="display: none;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+                                                <button type="submit" form="force-delete-visit-{{ $visit->id }}" class="btn-table-action btn-red" onclick="return confirm('Are you sure you want to permanently delete this visit record?')">
+                                                    💥 {{ __('Force Delete') }}
+                                                </button>
+                                            @endif
+                                        @else
+                                            {{-- If Pending: Show Decision Actions Only --}}
+                                            @if(strtolower($visit->status ?? 'pending') === 'pending')
+                                                <form id="visit-approve-{{ $visit->id }}" action="/admin/visits/{{ $visit->id }}/approve" method="POST" style="display: none;">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                </form>
+                                                <button type="submit" form="visit-approve-{{ $visit->id }}" class="btn-table-action btn-green">{{ __('Approve') }}</button>
+
+                                                <form id="visit-reject-{{ $visit->id }}" action="/admin/visits/{{ $visit->id }}/reject" method="POST" style="display: none;">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                </form>
+                                                <button type="submit" form="visit-reject-{{ $visit->id }}" class="btn-table-action btn-red">{{ __('Reject') }}</button>
+                                            @endif
+
+                                            {{-- If Approved or Rejected: Only then show the Delete button --}}
+                                            @if(in_array(strtolower($visit->status ?? ''), ['approved', 'rejected']))
+                                                @if(in_array(auth()->user()->role, ['admin', 'employee']))
+                                                    <form id="archive-visit-{{ $visit->id }}" action="/admin/visits/{{ $visit->id }}" method="POST" style="display: none;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    </form>
+                                                    <button type="submit" form="archive-visit-{{ $visit->id }}" class="btn-table-action btn-blue" style="margin-top: 2px;" onclick="return confirm('Are you sure you want to delete this visit record?')">
+                                                        🗑️ {{ __('Delete') }}
+                                                    </button>
+                                                @endif
+                                            @endif
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="8" style="text-align: center; color: #8a7a74; font-style: italic; padding: 20px;">
-                                    {{ __('No database records found.') }}
+                                <td colspan="9" style="text-align: center; color: #8a7a74; font-style: italic; padding: 20px;">
+                                    {{ __('No scheduled visit records found.') }}
                                 </td>
                             </tr>
                         @endif
@@ -211,4 +289,3 @@ use function Livewire\Volt\{state};
     </div>
 </body>
 </html>
-

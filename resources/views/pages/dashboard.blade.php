@@ -25,10 +25,8 @@ use function Livewire\Volt\{state};
                     
                     <li><a href="/admin/medicine">{{ __('Medications') }}</a></li>
                     
-                    @if(auth()->user()->role === 'admin')
-                        <li><a href="/admin/locations">{{ __('Locations') }}</a></li>
-                        <li><a href="/admin/users">{{ __('Users') }}</a></li>
-                    @endif
+                    <li><a href="/admin/locations">{{ __('Locations') }}</a></li>
+                    <li><a href="/admin/users">{{ __('Users') }}</a></li>
                 </ul>
             </div>
             
@@ -55,6 +53,12 @@ use function Livewire\Volt\{state};
         <main class="admin-main">
             <h1>{{ __('Dashboard Overview') }}</h1>
 
+            @if(session('status'))
+                <div class="alert alert-success" style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 12px 15px; margin-bottom: 20px; border-radius: 4px;">
+                    {{ session('status') }}
+                </div>
+            @endif
+
             @php
                 $totalAnimals = \App\Models\Animal::count();
                 $pendingAdoptions = \App\Models\Adoption::where('status', 'Pending')->count();
@@ -75,6 +79,7 @@ use function Livewire\Volt\{state};
                     <div class="num stat-purple-num">${{ number_format($totalDonations, 0, '.', ',') }}</div>
                 </div>
             </div>
+            
             <section class="block-card">
                 <h2>{{ __('Recent Adoption Requests') }}</h2>
                 <table>
@@ -91,7 +96,6 @@ use function Livewire\Volt\{state};
                     </thead>
                     <tbody>
                         @php
-                            // Paņemam pēdējos 5 pieteikumus, lai nepārslogotu sākumlapu
                             $recentAdoptions = \App\Models\Adoption::orderBy('id', 'desc')->take(5)->get();
                         @endphp
 
@@ -115,8 +119,22 @@ use function Livewire\Volt\{state};
                                         @endif
                                     </td>
                                     <td class="table-actions">
-                                        <button class="btn btn-green">{{ __('Approve') }}</button>
-                                        <button class="btn btn-red">{{ __('Reject') }}</button>
+                                        @if(strtolower($adoption->status) === 'pending')
+                                            {{-- Operational Form Elements --}}
+                                            <form action="/admin/applications/{{ $adoption->id }}/approve" method="POST" style="display: inline;">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-green" style="padding: 4px 8px; font-size: 0.85rem;">{{ __('Approve') }}</button>
+                                            </form>
+                                            
+                                            <form action="/admin/applications/{{ $adoption->id }}/reject" method="POST" style="display: inline;">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-red" style="padding: 4px 8px; font-size: 0.85rem;">{{ __('Reject') }}</button>
+                                            </form>
+                                        @else
+                                            <span style="color: #8a7a74; font-style: italic; font-size: 0.9rem;">{{ __('Decision Settled') }}</span>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -146,7 +164,6 @@ use function Livewire\Volt\{state};
                     </thead>
                     <tbody>
                         @php
-                            // Paņemam pēdējos 5 reģistrētos dzīvniekus tracking tabulai
                             $trackedAnimals = \App\Models\Animal::orderBy('id', 'desc')->take(5)->get();
                         @endphp
 
@@ -156,14 +173,11 @@ use function Livewire\Volt\{state};
                                     <td>#{{ sprintf('%03d', $animal->id) }}</td>
                                     <td>{{ $animal->name }}</td>
                                     <td>{{ __($animal->species) }}</td>
-                                    <td>
-                                        {{ __($animal->health_status) }}
-                                    </td>
-                                    <td>
-                                        {{ $animal->location->name ?? __('Unknown') }}
-                                    </td>
+                                    <td>{{ __($animal->health_status) }}</td>
+                                    <td>{{ $animal->location->name ?? __('Unknown') }}</td>
                                     <td class="table-actions">
-                                        <a href="/admin/animals/{{ $animal->id }}/edit" class="btn btn-blue">{{ __('Edit') }}</a>
+                                        {{-- Only showing the clean Edit action here --}}
+                                        <a href="/admin/animals/{{ $animal->id }}/edit" class="btn btn-blue" style="padding: 4px 8px; font-size: 0.85rem; text-decoration: none; display: inline-block;">{{ __('Edit') }}</a>
                                     </td>
                                 </tr>
                             @endforeach

@@ -4,36 +4,41 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Animal;
 use App\Models\Adoption;
-use App\Models\Visit;
 use App\Models\Donation;
-use App\Models\Medicine;
-use App\Models\Location;
 
 class AdminController extends Controller
 {
+    // Lietotāju saraksta attēlošana (Pieejams Admin & Employee)
     public function index()
     {
-        $currentUser = auth()->user();
-        if ($currentUser->isAdmin()) {
-            $users = \App\Models\User::withTrashed()->orderBy('date_joined', 'desc')->get();
-        } else {
-            $users = \App\Models\User::orderBy('date_joined', 'desc')->get();
-        }
-        return view('pages.admin.admin-users', ['users' => $users]);
+        $users = User::withTrashed()->orderBy('id', 'desc')->get();
+        return view('pages.admin.admin-users', compact('users'));
+    }
+
+    // Lietotāja bloķēšana vai atbloķēšana (Gan Admin, gan Employee var bloķēt)
+    public function block($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
+
+        $user->is_blocked = !$user->is_blocked;
+        $user->save();
+
+        $statusMessage = $user->is_blocked ? __('User blocked successfully.') : __('User unblocked successfully.');
+        
+        return redirect()->back()->with('success', $statusMessage);
     }
 
     public function dashboard()
     {
         $stats = [
             'total_users' => User::count(),
-            'pending_adoptions' => Adoption::where('status', 'pending')->count(),
+            'total_animals' => Animal::count(),
+            'pending_adoptions' => Adoption::where('status', 'Pending')->count(),
+            'total_donations' => Donation::sum('amount'), // Izmanto kolonnu, kas ir tavā DB (piem. amount)
         ];
 
-        return view('admin.dashboard', compact('stats'));
-    }
-    public function block($id)
-    {
-        return redirect()->back();
+        return view('pages.dashboard', compact('stats'));
     }
 }

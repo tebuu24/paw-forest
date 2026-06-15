@@ -9,7 +9,7 @@ class Donation extends Model
 {
     use SoftDeletes;
     public $timestamps = false;
-
+    
     protected $fillable = [
         'date',
         'amount',

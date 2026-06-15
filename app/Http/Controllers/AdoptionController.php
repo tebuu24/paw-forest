@@ -8,12 +8,47 @@ use App\Models\Animal;
 
 class AdoptionController extends Controller
 {
-    public function index() {}
-    public function create() {}
-    public function show($id) {}
-    public function updateStatus(Request $request, $id) {}
+    public function approve($id)
+    {
+        $adoption = Adoption::findOrFail($id);
+        $adoption->update(['status' => 'Approved']);
 
-    public function store(Request $request)
+        return redirect()->back()->with('status', __('Application has been approved.'));
+    }
+
+    public function reject($id)
+    {
+        $adoption = Adoption::findOrFail($id);
+        $adoption->update(['status' => 'Rejected']);
+
+        return redirect()->back()->with('status', __('Application has been rejected.'));
+    }
+
+    public function destroy($id)
+    {
+        $adoption = Adoption::findOrFail($id);
+        $adoption->delete();
+
+        return redirect()->back()->with('status', __('Application deleted successfully.'));
+    }
+
+    public function restore($id)
+    {
+        // We use withTrashed() to find records that have a deleted_at timestamp
+        $adoption = Adoption::withTrashed()->findOrFail($id);
+        $adoption->restore();
+
+        return redirect()->back()->with('status', __('Application restored to active view.'));
+    }
+
+    public function forceDelete($id)
+    {
+        $adoption = Adoption::withTrashed()->findOrFail($id);
+        $adoption->forceDelete();
+
+        return redirect()->back()->with('status', __('Application record completely erased.'));
+    }
+      public function store(Request $request)
     {
         if (!auth()->check()) {
             return redirect()->route('login')->with('error', __('Please log in to apply for adoption.'));

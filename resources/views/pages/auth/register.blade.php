@@ -29,6 +29,8 @@ use function Livewire\Volt\{state};
     </header>
     <main class="container auth-container">
         <div class="block-card auth-card">
+            
+            {{-- NATIVE VALIDATION ERRORS --}}
             @if ($errors->any())
                 <div class="alert alert-danger" style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 12px 15px; margin-bottom: 20px; border-radius: 4px; font-size: 0.9rem;">
                     <ul style="margin: 0; padding-left: 20px;">
@@ -39,11 +41,19 @@ use function Livewire\Volt\{state};
                 </div>
             @endif
 
+            {{-- FIXED: MANUAL REDIRECT ERRORS --}}
+            @if (session('error'))
+                <div class="alert alert-danger" style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 12px 15px; margin-bottom: 20px; border-radius: 4px; font-size: 0.9rem;">
+                    <span style="font-weight: bold;">⚠️ {{ __(session('error')) }}</span>
+                </div>
+            @endif
+
             @if (session('status'))
                 <div class="alert alert-success" style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 12px 15px; margin-bottom: 20px; border-radius: 4px; font-size: 0.9rem;">
                     {{ __(session('status')) }}
                 </div>
             @endif
+            
             <h1>{{ __('Registration') }}</h1>
             <br>
             <form method="POST" action="/register">

@@ -53,10 +53,17 @@
             </div>
         </section>
 
-        {{-- 📊 Statistikas aprēķini ir atpakaļ mājās, drošībā iekš Blade --}}
         @php
-            $adoptedCount = \App\Models\Adoption::where('status', 'Approved')->count();
-            $needingHomeCount = \App\Models\Animal::count();
+            // Get the IDs of all animals that have an approved adoption record
+            $adoptedAnimalIds = \App\Models\Adoption::where('status', 'Approved')
+                ->pluck('animal_id')
+                ->toArray();
+
+            $adoptedCount = count($adoptedAnimalIds);
+            
+            // Filter out animals that are adopted, and ensure soft-deleted entries are ignored
+            $needingHomeCount = \App\Models\Animal::whereNotIn('id', $adoptedAnimalIds)->count();
+            
             $latestDonationsSum = class_exists('\App\Models\Donation') ? \App\Models\Donation::sum('amount') : 2500;
         @endphp
 
@@ -81,26 +88,28 @@
             {{ __('Recently added') }}
         </h2>
         
-        {{-- 🐕 Dzīvnieku kartes, kas nāk caur AnimalController --}}
         @if(isset($recentAnimals) && $recentAnimals->count() > 0)
             <section class="gallery-grid" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; width: 100%;">
                 @foreach($recentAnimals as $animal)
-                    <div class="animal-card block-card" style="flex: 1 1 250px; max-width: 300px; margin: 0;">
-                        @if($animal->image)
-                            <img src="{{ asset($animal->image) }}" alt="{{ $animal->name }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
-                        @else
-                            <div class="img-placeholder" style="height: 200px; display: flex; align-items: center; justify-content: center; background: #e2dcd8; border-radius: 8px 8px 0 0;">🐾 No Image</div>
-                        @endif
-                        <div class="card-info">
-                            <h2>{{ $animal->name }}</h2>
-                            <p>
-                                {{ __($animal->species) }}, 
-                                {{ $animal->age !== null ? trans_choice('{0} 0 years|{1} :count year|[2,*] :count years', $animal->age, ['count' => $animal->age]) : __('N/A') }},
-                                {{ $animal->location ? trim(str_ireplace('Shelter', '', $animal->location->name)) : __('Unknown Location') }}
-                            </p>
-                            <a href="/gallery/{{ $animal->id }}" class="btn btn-green">{{ __('View Profile') }}</a>
+                    {{-- Only display the card if the animal ID isn't in the collection of approved adoptions --}}
+                    @if(!in_array($animal->id, $adoptedAnimalIds))
+                        <div class="animal-card block-card" style="flex: 1 1 250px; max-width: 300px; margin: 0;">
+                            @if($animal->image)
+                                <img src="{{ asset($animal->image) }}" alt="{{ $animal->name }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                            @else
+                                <div class="img-placeholder" style="height: 200px; display: flex; align-items: center; justify-content: center; background: #e2dcd8; border-radius: 8px 8px 0 0;">🐾 No Image</div>
+                            @endif
+                            <div class="card-info">
+                                <h2>{{ $animal->name }}</h2>
+                                <p>
+                                    {{ __($animal->species) }}, 
+                                    {{ $animal->age !== null ? trans_choice('{0} 0 years|{1} :count year|[2,*] :count years', $animal->age, ['count' => $animal->age]) : __('N/A') }},
+                                    {{ $animal->location ? trim(str_ireplace('Shelter', '', $animal->location->name)) : __('Unknown Location') }}
+                                </p>
+                                <a href="/gallery/{{ $animal->id }}" class="btn btn-green">{{ __('View Profile') }}</a>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 @endforeach
             </section>
         @else
@@ -118,7 +127,7 @@
                 🏡
             </div>
             <div class="info-content-box">
-                <span class="info-pretitle">{{ __('About Our Shelter') }}</span>
+                <span class="info-pretitle{{ __('About Our Shelter') }}</span>
                 <h2 class="info-title">{{ __('A Safe Haven Guided by Love') }}</h2>
                 <p class="info-paragraph">
                     {{ __('Paw Forest is a non-profit animal shelter dedicated to finding the right home for every animal. Our staff and volunteers provide daily care, medical support, and most importantly - endless love.') }}

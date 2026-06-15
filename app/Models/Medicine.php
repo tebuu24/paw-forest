@@ -9,7 +9,7 @@ use App\Models\User;
 class Medicine extends Model
 {
     use SoftDeletes;
-
+    public $timestamps = false;
     protected $fillable = [
         'name',
         'description',
@@ -26,7 +26,7 @@ class Medicine extends Model
         return $this->belongsTo(User::class, 'employee_id');
     }
 
-  public function animal()
+    public function animal()
     {
         return $this->belongsTo(\App\Models\Animal::class, 'animal_id');
     }

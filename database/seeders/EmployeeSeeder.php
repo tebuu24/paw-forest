@@ -53,5 +53,6 @@ class EmployeeSeeder extends Seeder
         // Darbinieks 9
         User::create(['id' => 9, 'name' => 'Gints Kļaviņš', 'username' => 'gints_emp', 'email' => 'gints@pawforest.com', 'password' => $password, 'role' => 'employee', 'address' => 'Valmiera, Latvija', 'date_joined' => now()]);
         DB::table('employees')->insert(['user_id' => 9, 'location_id' => 3, 'phone_number' => '+371 20000009', 'job_title' => 'Animal Care Specialist']);
-    }
+    
+        }
 }
