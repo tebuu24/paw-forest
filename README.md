@@ -16,3 +16,7 @@ The main purpose of this animal adoption service is to:
     - view all donations
     - view and manage all visitation applications
     - view and manage all animal medical prescriptions
+
+
+.env file requires
+API_NINJAS_KEY = "[insert your API Ninjas key here]"
