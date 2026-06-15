@@ -63,9 +63,6 @@ use function Livewire\Volt\{state};
                 <p><b>{{ __('Shelter Location') }}:</b> {{ $animal->location ? trim(str_ireplace('Shelter', '', $animal->location->name)) : __('Main Shelter') }}</p>
                 <p><b>{{ __('Date Added to Shelter') }}:</b> {{ $animal->date_joined ?? ($animal->created_at ? $animal->created_at->format('Y-m-d') : date('Y-m-d')) }}</p>
                 
-                <h2 class="profile-section-title">{{ __('Description / Medication Notes') }}:</h2>
-
-                <p class="animal-description-text">{{ $animal->description ?? __('No specific notes or descriptions provided.') }}</p>
 
                 <div class="medication-notes-block">
                     <h3>{{ __('Active Medication & Treatment') }}</h3>
