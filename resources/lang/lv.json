@@ -348,5 +348,6 @@
     "Visit has been rejected.": "Vizīte ir noraidīta.",
     "Visit record deleted successfully.": "Vizītes ieraksts veiksmīgi dzēsts.",
     "Visit restored to active view.": "Vizīte veiksmīgi atjaunota aktīvajā skatā.",
-    "Visit record completely erased.": "Vizītes ieraksts ir pilnībā neatgriezeniski dzēsts."
+    "Visit record completely erased.": "Vizītes ieraksts ir pilnībā neatgriezeniski dzēsts.",
+    "Decision Settled":"Lēmums pieņemts."
 }
