@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Visit;
 use App\Models\Animal;
+use App\Models\Employee;
 
 class VisitController extends Controller
 {
@@ -44,7 +45,13 @@ class VisitController extends Controller
     public function approve($id)
     {
         $visit = Visit::findOrFail($id);
-        $visit->update(['status' => 'Approved']); 
+        
+        $employee = Employee::where('user_id', auth()->id())->first();
+
+        $visit->update([
+            'status'      => 'Approved',
+            'employee_id' => $employee ? $employee->id : null
+        ]); 
 
         return redirect()->back()->with('status', __('Visit has been approved.'));
     }
@@ -52,7 +59,13 @@ class VisitController extends Controller
     public function reject($id)
     {
         $visit = Visit::findOrFail($id);
-        $visit->update(['status' => 'Rejected']);
+        
+        $employee = Employee::where('user_id', auth()->id())->first();
+
+        $visit->update([
+            'status'      => 'Rejected',
+            'employee_id' => $employee ? $employee->id : null
+        ]);
 
         return redirect()->back()->with('status', __('Visit has been rejected.'));
     }

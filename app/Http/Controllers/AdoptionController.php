@@ -5,13 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Adoption;
 use App\Models\Animal;
+use App\Models\Employee;
 
 class AdoptionController extends Controller
 {
     public function approve($id)
     {
         $adoption = Adoption::findOrFail($id);
-        $adoption->update(['status' => 'Approved']);
+        
+        $employee = Employee::where('user_id', auth()->id())->first();
+
+        $adoption->update([
+            'status'      => 'Approved',
+            'employee_id' => $employee ? $employee->id : null
+        ]);
 
         return redirect()->back()->with('status', __('Application has been approved.'));
     }
@@ -19,7 +26,13 @@ class AdoptionController extends Controller
     public function reject($id)
     {
         $adoption = Adoption::findOrFail($id);
-        $adoption->update(['status' => 'Rejected']);
+        
+        $employee = Employee::where('user_id', auth()->id())->first();
+
+        $adoption->update([
+            'status'      => 'Rejected',
+            'employee_id' => $employee ? $employee->id : null
+        ]);
 
         return redirect()->back()->with('status', __('Application has been rejected.'));
     }
