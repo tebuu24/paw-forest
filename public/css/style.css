@@ -1302,3 +1302,29 @@ td.action-buttons-cell {
     border-top: 1px solid #e5dfdb;
     margin: 20px 0;
 }
+
+/* profila fix ar statusiem*/
+.profile-history-card {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.profile-history-card table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.profile-history-card th, 
+.profile-history-card td {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+
+.profile-history-card td span[class^="stat-"] {
+    display: inline-block;
+    white-space: nowrap;
+    max-width: 100%;
+}

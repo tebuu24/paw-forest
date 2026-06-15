@@ -152,7 +152,7 @@ use function Livewire\Volt\{state};
 
         <div class="block-card profile-history-card">
             <h2>{{ __('My Adoption Applications') }}</h2>
-            @if(auth()->user()->adoptions && auth()->user()->adoptions->count() > 0)
+            @if(auth()->user()->adoptionRequests && auth()->user()->adoptionRequests->count() > 0)
                 <table>
                     <thead>
                         <tr>
@@ -163,7 +163,7 @@ use function Livewire\Volt\{state};
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(auth()->user()->adoptions as $application)
+                        @foreach(auth()->user()->adoptionRequests as $application)
                             <tr>
                                 <td>{{ $application->date }}</td>
                                 <td>
@@ -199,7 +199,7 @@ use function Livewire\Volt\{state};
                             <th>{{ __('Location') }}</th>
                             <th>{{ __('Animal') }}</th>
                             <th>{{ __('Comment') }}</th>
-                        </tr>
+                            <th>{{ __('Status') }}</th> </tr>
                     </thead>
                     <tbody>
                         @foreach(auth()->user()->shelterVisits as $visit)
@@ -214,6 +214,18 @@ use function Livewire\Volt\{state};
                                     @endif
                                 </td>
                                 <td>{{ $visit->comment }}</td>
+                                <td>@if(isset($visit->status))
+                                        @if(strtolower($visit->status) == 'approved')
+                                            <span class="stat-green-num">{{ __($visit->status) }}</span>
+                                        @elseif(strtolower($visit->status) == 'rejected')
+                                            <span class="stat-red-num">{{ __($visit->status) }}</span>
+                                        @else
+                                            <span class="stat-purple-num">{{ __($visit->status) }}</span>
+                                        @endif
+                                    @else
+                                        <span class="stat-purple-num">{{ __('Pending') }}</span>
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
