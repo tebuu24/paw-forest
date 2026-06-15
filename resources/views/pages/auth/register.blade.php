@@ -8,7 +8,7 @@ use function Livewire\Volt\{state};
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>{{ __('Paw Forest - Register') }}</title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v={{ time() }}">
+    <link rel="icon" type="image/x-icon" href="{{ secure_asset('favicon.ico') }}?v={{ time() }}">
     <link rel="stylesheet" href="{{ secure_asset('css/style.css') }}?v={{ time() }}">
 </head>
 <body>
