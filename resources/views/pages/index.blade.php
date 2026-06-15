@@ -79,7 +79,7 @@
             </div>
 
             <div class="admin-stat-card block-card">
-                <div class="stat-icon-label">{{ __('Latest Donations') }}</div>
+                <div class="stat-icon-label">{{ __('Total Donations') }}</div>
                 <div class="num stat-purple-num">${{ number_format($latestDonationsSum, 0, '.', ',') }}</div>
             </div>
         </div>

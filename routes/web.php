@@ -15,7 +15,9 @@ use App\Http\Controllers\DonationController;
 Route::get('/', [AnimalController::class, 'home'])->name('home');
 Route::get('/gallery', [AnimalController::class, 'index'])->name('gallery.index');
 Route::get('/gallery/{id}', [AnimalController::class, 'show'])->name('gallery.show');
-Route::view('/donations', 'pages.donations');
+
+Route::get('/donations', [DonationController::class, 'create'])->name('donations.create');
+Route::post('/donations', [DonationController::class, 'store'])->name('donations.store');
 
 // Language Switcher
 Route::get('/lang/{locale}', function ($locale) {
@@ -33,6 +35,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/profile/update', [UserController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [UserController::class, 'updatePassword'])->name('profile.password');
     Route::delete('/profile/delete', [UserController::class, 'destroy'])->name('profile.delete');
+    Route::post('/visits', [VisitController::class, 'store'])->name('visits.store');
+    Route::post('/adoptions', [AdoptionController::class, 'store'])->name('adoptions.store');
     
     // --- Employee & Admin Shared Routes ---
     Route::middleware(['employee'])->group(function () {
@@ -120,6 +124,8 @@ Route::middleware(['auth'])->group(function () {
         Route::view('/admin/donations', 'pages.admin.admin-donations');
         Route::get('/admin/donations/{id}/edit', [DonationController::class, 'edit']);
         Route::put('/admin/donations/{id}', [DonationController::class, 'update']);
+        Route::get('/admin/donations', [DonationController::class, 'index'])->name('admin.donations.index');
+        Route::get('/admin/donations/{id}', [DonationController::class, 'show'])->name('admin.donations.show');
         Route::delete('/admin/donations/{id}', [DonationController::class, 'destroy']);
         Route::post('/admin/donations/{id}/restore', [DonationController::class, 'restore']);
     });
