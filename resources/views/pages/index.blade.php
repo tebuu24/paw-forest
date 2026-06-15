@@ -127,7 +127,7 @@
                 🏡
             </div>
             <div class="info-content-box">
-                <span class="info-pretitle{{ __('About Our Shelter') }}</span>
+                <span class="info-pretitle">{{ __('About Our Shelter') }}</span>
                 <h2 class="info-title">{{ __('A Safe Haven Guided by Love') }}</h2>
                 <p class="info-paragraph">
                     {{ __('Paw Forest is a non-profit animal shelter dedicated to finding the right home for every animal. Our staff and volunteers provide daily care, medical support, and most importantly - endless love.') }}

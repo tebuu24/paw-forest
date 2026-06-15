@@ -145,7 +145,7 @@ state(['users' => fn () => \App\Models\User::withTrashed()->orderBy('date_joined
                                                     <form action="{{ url('/admin/users/'.$user->id.'/force-delete') }}" method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-red" style="padding: 4px 8px; background-color: #d9534f;" onclick="return confirm('💥 Pilnībā un neatgriezeniski izdzēst no DB?')">
+                                                        <button type="submit" class="btn btn-sm btn-red" style="padding: 4px 8px; background-color: #d9534f;" onclick="return confirm('Pilnībā un neatgriezeniski izdzēst no DB?')">
                                                             {{ __('Force Delete') }}
                                                         </button>
                                                     </form>

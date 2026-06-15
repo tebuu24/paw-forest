@@ -36,7 +36,7 @@ class AdminController extends Controller
             'total_users' => User::count(),
             'total_animals' => Animal::count(),
             'pending_adoptions' => Adoption::where('status', 'Pending')->count(),
-            'total_donations' => Donation::sum('amount'), // Izmanto kolonnu, kas ir tavā DB (piem. amount)
+            'total_donations' => Donation::sum('amount')
         ];
 
         return view('pages.dashboard', compact('stats'));
